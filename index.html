@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="author" content="Zahidur Rahman" />
+  <title>One Ummah</title>
+  <link rel="shortcut icon" href="oneummah.ico" type="image/x-icon" />
+  <style>
+    html {
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+
+    /* CSS Variables for Theming */
+    :root {
+      --primary-color: #333;
+      --accent-color: #007bff;
+      --header-bg: #fff;
+      /* Header background for large screens and footer */
+      --hamburger-bg: rgba(245, 245, 245, 0.5);
+      --nav-bg: rgba(255, 255, 255, 0.2);
+      /* Translucent white */
+    }
+
+    /* Global Reset */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Ensure the HTML and body fill the viewport */
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--primary-color);
+      line-height: 1.6;
+      background: var(--header-bg);
+    }
+
+    #preloader1 {
+      background: #000000 url(img/opreload.gif) no-repeat center center;
+      background-size: 30%;
+      height: 100vh;
+      width: 100%;
+      position: fixed;
+      z-index: 100;
+    }
+
+    /* Sticky Footer Setup - Make the wrapper a flex container */
+    .site-wrapper {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Header & Navigation for Large Screens */
+    header {
+      background-color: var(--header-bg);
+      padding: 1rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+    }
+
+    .nav-list li {
+      margin: 0 1rem;
+    }
+
+    .nav-list li a {
+      text-decoration: none;
+      color: var(--primary-color);
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    .nav-list li a:hover,
+    .nav-list li a:focus {
+      color: var(--accent-color);
+    }
+
+    /* Hamburger Menu (Accessible Button) */
+    .hamburger {
+      display: none;
+      /* Visible only on small screens */
+      flex-direction: column;
+      justify-content: space-around;
+      width: 30px;
+      height: 30px;
+      padding: 5px;
+      border: none;
+      background: var(--hamburger-bg);
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      position: absolute;
+      top: 0;
+      right: 1rem;
+      z-index: 1100;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+    }
+
+    .hamburger:focus {
+      outline: none;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 100%;
+      height: 3px;
+      background: var(--primary-color);
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    /* Hamburger Active Animation to form an "X" */
+    .hamburger.active span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+
+    /* Mobile Navigation Overlay (Small Screens) */
+    @media (max-width: 768px) {
+
+      /* Optional adjustments for header on mobile */
+      header {
+        background-color: transparent;
+        padding: 0;
+        box-shadow: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      /* Transform the nav-list into a full-screen overlay */
+      .nav-list {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: var(--nav-bg);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        z-index: 1050;
+      }
+
+      /* When active, show the overlay menu */
+      .nav-list.active {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+
+    /* Desktop Navigation */
+    @media (min-width: 769px) {
+
+      .hamburger {
+        display: none;
+      }
+
+      nav {
+        justify-content: center;
+      }
+    }
+
+    /* Main Content */
+    main {
+      padding: 2rem 0;
+      flex: 1;
+      /* This makes the main content take up available space */
+    }
+
+    .main-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .flex-center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--header-bg);
+      text-align: center;
+      padding: 1rem;
+      box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Preloader -->
+  <div id="preloader1"></div>
+
+  <!-- Site Content Wrapper (for sticky footer) -->
+  <div class="site-wrapper">
+    <!-- Header with Navigation -->
+    <header>
+      <div class="container">
+        <nav>
+          <!-- Navigation List -->
+          <ul class="nav-list" id="navList">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contents.html">Contents</a></li>
+            <li><a href="beneficial.html">Beneficial Websites</a></li>
+            <li><a href="request.html">Request</a></li>
+          </ul>
+          <!-- Hamburger Button for Mobile -->
+          <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+      <div class="main-container">
+        <div class="flex-center">
+          <img src="oneummah.ico" alt="One Ummah Logo" style="max-width: 100%; height: auto;" />
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2024-25 One Ummah. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    var loader = document.getElementById("preloader1");
+    window.addEventListener("load", function () {
+      loader.style.display = "none";
+    });
+  </script>
+  <!-- JavaScript for Preloader & Hamburger Toggle -->
+  <script>
+    const hamburger = document.getElementById("hamburger");
+    const navList = document.getElementById("navList");
+
+    hamburger.addEventListener("click", function () {
+      this.classList.toggle("active");
+      navList.classList.toggle("active");
+    });
+  </script>
+</body>
+
+</html>

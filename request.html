@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Zahidur Rahman">
+    <title>Request</title>
+    <link rel="shortcut icon" href="oneummah.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="preloader"></div>
+    <center>
+        <div class="contact-container">
+            <form id="requestForm" action="https://api.web3forms.com/submit" method="POST" class="contact-left">
+                <div class="contact-left-title">
+                    <h2>Assalamua'laikum wa rahmatullahi wa barkatuhu</h2>
+                    <hr>
+                </div>
+                <input type="hidden" name="access_key" value="87365590-ed8d-489b-9d87-6c4eea8b49b2">
+                <input type="hidden" name="redirect" value="https://lailahaillallah.netlify.app/success.html">
+                <input type="hidden" name="from_name" value="One Ummah">
+                <input type="text" name="name" placeholder="Your Name" class="contact-inputs" required>
+                <input type="hidden" id="ipAddress" name="ipAddress" class="contact-inputs">
+                <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+                <input type="email" id="email" name="email" placeholder="Your Email" class="contact-inputs" required>
+                <textarea name="message"
+                    placeholder="Requests about Islamic Books,Qur'an Recitations,New Ideas,Errors/Issues will be accepted only.[Note:- One request per day and Three requests per month]"
+                    class="contact-inputs" required></textarea>
+                <div class="h-captcha" data-captcha="true" data-theme="dark" data-onload="myFunction"></div>
+                <button type="submit">Submit &#11085;</button>
+            </form>
+        </div>
+    </center>
+
+    <script>
+        var loader = document.getElementById("preloader");
+        window.addEventListener("load", function () {
+            loader.style.display = "none";
+        });
+    </script>
+
+    <script>
+        const MAX_DAILY_SUBMISSIONS = 1;
+        const MAX_MONTHLY_SUBMISSIONS = 3;
+        const ONE_DAY = 24 * 60 * 60 * 1000;
+        const ONE_MONTH = 30 * ONE_DAY;
+
+        function getSubmissionData() {
+            const data = localStorage.getItem('submissionData');
+            return data ? JSON.parse(data) : { count: 0, lastSubmission: null };
+        }
+
+        function saveSubmissionData(data) {
+            localStorage.setItem('submissionData', JSON.stringify(data));
+        }
+
+        function handleSubmit(event) {
+            const data = getSubmissionData();
+            const currentDate = new Date().getTime();
+            const lastSubmissionDate = new Date(data.lastSubmission).getTime();
+
+            const daysSinceLastSubmission = Math.round((currentDate - lastSubmissionDate) / ONE_DAY);
+            const monthsSinceLastSubmission = Math.round((currentDate - lastSubmissionDate) / ONE_MONTH);
+
+            if (data.count >= MAX_DAILY_SUBMISSIONS && daysSinceLastSubmission < 1) {
+                alert('You can only submit one request per day.');
+                event.preventDefault();
+                return;
+            }
+
+            if (data.count >= MAX_MONTHLY_SUBMISSIONS && monthsSinceLastSubmission < 1) {
+                alert('You can only submit three requests per month.');
+                event.preventDefault();
+                return;
+            }
+
+            if (daysSinceLastSubmission >= 1) {
+                data.count = 0;
+            }
+
+            if (monthsSinceLastSubmission >= 1) {
+                data.count = 0;
+            }
+
+            data.count++;
+            data.lastSubmission = new Date().toISOString();
+            saveSubmissionData(data);
+
+            const remainingChances = MAX_MONTHLY_SUBMISSIONS - data.count;
+            alert(`You have ${remainingChances} submission(s) left this month.`);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('requestForm').addEventListener('submit', handleSubmit);
+        });
+    </script>
+
+    <script>
+        async function getIpAddress() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                document.getElementById('ipAddress').value = data.ip;
+            } catch (error) {
+                console.error('Error fetching IP address:', error);
+            }
+        }
+        window.onload = getIpAddress;
+    </script>
+
+    <script src="https://web3forms.com/client/script.js" async defer></script>
+
+    <script>
+        const form = document.getElementById('requestForm');
+        form.addEventListener('submit', function (e) {
+            const hCaptcha = form.querySelector('textarea[name=h-captcha-response]').value;
+            if (!hCaptcha) {
+                e.preventDefault();
+                alert("Please fill out captcha field");
+                return;
+            }
+        });
+    </script>
+</body>
+
+</html>

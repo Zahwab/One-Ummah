@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="author" content="Zahidur Rahman" />
+  <title>Beneficial Websites</title>
+  <link rel="shortcut icon" href="oneummah.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Global Reset & Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #edeae5;
+      font-family: Arial, sans-serif;
+      color: #333;
+      line-height: 1.6;
+      transition: background-color 3s ease-in-out;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Container for a professional centered look */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      font-size: 1.2rem;
+    }
+
+    /* Section Styles */
+    section {
+      margin-bottom: 2rem;
+    }
+
+    /* Standard static layout using Flexbox */
+    .links-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    /* Link Block Styles with Hover Glow Effect */
+    .link-block {
+      background-color: #272727;
+      color: #fff;
+      padding: 0.8em 1.2em;
+      font-size: 1.5rem;
+      border-radius: 4px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .link-block:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
+    }
+
+    /* Color Modifiers */
+    .alifta {
+      color: #10a510;
+    }
+
+    .sunnahweb {
+      color: #75a1a1;
+    }
+
+    .gi {
+      color: #f8eeac;
+    }
+
+    .tws {
+      color: #ececdc;
+    }
+
+    .salahweb {
+      color: #7bf2fb;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 600px) {
+      .link-block {
+        font-size: 1.2rem;
+        padding: 0.6em 1em;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="preloader1"></div>
+
+  <div class="container">
+    <header>
+      <h1>Beneficial Websites</h1>
+      <p>A curated list of helpful Islamic resources</p>
+    </header>
+
+    <!-- Section 1 -->
+    <section aria-label="Web Resources 1">
+      <div class="links-container">
+        <a href="https://abdurrahman.org/tag/alifta-com/" target="_blank" class="link-block alifta">
+          &#128220; Alifta.com &#128220;
+        </a>
+        <a href="https://sunnah.com/" target="_blank" class="link-block sunnahweb">
+          &#128220; Sunnah.com &#128220;
+        </a>
+      </div>
+    </section>
+
+    <!-- Section 2 -->
+    <section aria-label="Web Resources 2">
+      <div class="links-container">
+        <a href="https://www.gardenofilm.com/" target="_blank" class="link-block gi">
+          &#128220; Garden Of Ilm &#128220;
+        </a>
+        <a href="https://thewayofsalafiyyah.com/" target="_blank" class="link-block tws">
+          &#128220; The Way Of Salafiyyah.Com &#128220;
+        </a>
+      </div>
+    </section>
+
+    <!-- Section 3 -->
+    <section aria-label="Web Resources 3">
+      <div class="links-container">
+        <a href="https://salah.com/" target="_blank" class="link-block salahweb">
+          &#128332; Salah.com &#128332;
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    var loader = document.getElementById("preloader1");
+    window.addEventListener("load", function () {
+      loader.style.display = "none";
+    })
+
+    // Background color changing script using random light colors.
+    function getRandomLightColor() {
+      const r = Math.floor(200 + Math.random() * 56); // Range: 200-255 for lighter colors
+      const g = Math.floor(200 + Math.random() * 56);
+      const b = Math.floor(200 + Math.random() * 56);
+      return `rgb(${r}, ${g}, ${b})`;
+    }
+
+    function changeBackgroundColor() {
+      document.body.style.backgroundColor = getRandomLightColor();
+    }
+
+    document.body.style.backgroundColor = getRandomLightColor();
+    setTimeout(changeBackgroundColor, 100);
+    setInterval(changeBackgroundColor, 5000);
+  </script>
+</body>
+
+</html>

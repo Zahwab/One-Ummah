@@ -1,0 +1,2527 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Zahidur Rahman">
+    <title>Books Of Knowledge</title>
+    <link rel="shortcut icon" href="oneummah.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Base Styles */
+        .hbook {
+            font-size: 4vw;
+            font-family: monospace, sans-serif;
+
+        }
+
+        .sunnah {
+            font-size: 2vw;
+
+
+        }
+
+        .sunnah a {
+            text-decoration: none;
+            color: #1F6521;
+        }
+
+        /* The anchors inside .books will now be left aligned */
+        .books a {
+            font-size: 1.7vw;
+            display: flex;
+            text-decoration: none;
+            justify-content: flex-start;
+            /* Changed from "space-around" to "flex-start" for left alignment */
+            padding: 1%;
+            color: #1F6521;
+        }
+
+        /* ------------------------------
+   Responsive Styles
+------------------------------ */
+
+
+
+
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Semi-transparent overlay */
+            backdrop-filter: blur(5px);
+            /* Adds blur effect */
+        }
+
+        /* Glowing effect for the search box */
+        .search-box.glow {
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.7);
+            transition: box-shadow 0.5s ease-in-out;
+        }
+
+        br {
+            display: block !important;
+        }
+
+        .modal-content {
+            background-color: rgba(255, 255, 255, 0.8);
+            /* Glass-like transparency */
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            /* Subtle border to blend with glass effect */
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0, 255, 255, 0.5);
+            /* Glowing effect */
+            backdrop-filter: blur(10px);
+            /* Enhances glass appearance */
+            transition: all 0.3s ease-in-out;
+            text-align: center;
+            /* Center aligns text */
+        }
+
+        .close {
+            color: #aaa;
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: black;
+            /* Changes color to black on hover */
+            text-decoration: none;
+        }
+
+        .download-button {
+            background-color: #4CAF50;
+            /* Green button */
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 15px;
+            box-shadow: 0 4px 15px rgba(72, 239, 128, 0.5);
+            /* Glow effect */
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .download-button:hover {
+            transform: scale(1.05);
+            /* Slight enlarge effect */
+            box-shadow: 0 6px 20px rgba(72, 239, 128, 0.8);
+            /* Intense glow on hover */
+        }
+
+        .read-button {
+            background-color: #2196F3;
+            /* Blue button for reading */
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 15px 10px 0 0;
+            /* Adds spacing between buttons */
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.5);
+            /* Subtle glow */
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .read-button:hover {
+            transform: scale(1.05);
+            /* Slight enlarge effect */
+            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.8);
+            /* Intense glow on hover */
+        }
+
+        /* Pagination Controls */
+        #pagination {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        #pagination button {
+            background-color: #4CAF50;
+            border: none;
+            color: #fff;
+            padding: 10px 15px;
+            margin: 0 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+
+        #pagination button:hover {
+            background-color: #45a049;
+        }
+
+        #pagination span {
+            font-size: 16px;
+            margin: 0 10px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Ensure that anchors can host absolutely positioned children */
+        .highlight-container {
+            position: relative;
+            z-index: 0;
+            /* Text will render above any child with negative z-index */
+        }
+
+        /* Perfect highlight overlays appear as semi-transparent yellow boxes behind the text */
+        .perfect-highlight-overlay {
+            position: absolute;
+            background-color: rgba(255, 255, 0, 0.5);
+            /* semi-transparent yellow */
+            pointer-events: none;
+            /* so they don't interfere with mouse events */
+            z-index: -1;
+            /* ensure the overlay is behind the text */
+        }
+
+
+
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .hbook {
+                font-size: 6vw;
+
+            }
+
+            .sunnah {
+                font-size: 3vw;
+
+            }
+
+            .books a {
+                font-size: 3vw;
+                padding: 2%;
+                justify-content: flex-start;
+            }
+
+            .modal-content {
+                width: 90%;
+                /* Adjust for smaller screens */
+                padding: 15px;
+            }
+
+            .close {
+                font-size: 24px;
+            }
+
+            .read-button,
+            .download-button {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+
+            #pagination button {
+                font-size: 12px;
+                padding: 8px 12px;
+            }
+
+            #pagination span {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hbook {
+                font-size: 7vw;
+
+            }
+
+            .sunnah {
+                font-size: 3vw;
+
+            }
+
+            .books a {
+                font-size: 4vw;
+                padding: 3%;
+                justify-content: flex-start;
+            }
+
+            .modal-content {
+                width: 95%;
+                /* Adjust for very small screens */
+                margin: 15% auto;
+            }
+
+            .read-button,
+            .download-button {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+
+            #pagination button {
+                font-size: 12px;
+                padding: 6px 10px;
+            }
+
+            #pagination span {
+                font-size: 12px;
+            }
+        }
+    </style>
+
+
+</head>
+
+<body bgcolor="#EDEAE5">
+    <div id="preloader1"></div>
+    <center>
+        <div class="hbook">Some Beneficial Books</div>
+    </center>
+    <br><br>
+    <div class="sunnah">
+        <center>
+            One Of The Best Websites Of Ahadith <a href="https://sunnah.com/" target="_blank">(Sunnah.com)</a>
+        </center>
+    </div>
+    <br><br>
+    <div class="search-container">
+        <div class="search-box" id="searchBox">
+            <input type="text" class="search-input" placeholder="Find the book..." id="searchInput"
+                oninput="showSuggestions()" onfocus="setLevel()" onblur="setDefault()" onkeydown="handleKeyDown(event)">
+            <button class="clear-button" id="clearButton" onclick="clearSearch()">&times;</button>
+        </div>
+    </div>
+    <br><br>
+    <div id="content">
+        <div class="books">
+
+            <a href="books of knowledge/Translation of the meanings of The Noble Qur'an (English).pdf"
+                class="pdf-link">Translation of the meanings of THE NOBLE
+                QUR'AN(English)
+                by Dr. Muhammad Taqi-ud-Din AI-Hilali and Dr. Muhammad Muhsin Khan</a><br>
+            <a href="books of knowledge/Tafsir Ibn Kathir all 10 volumes.pdf" class="pdf-link">Tafsir
+                Ibn Kathir all 10
+                volumes</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 001.Surah Al Fatiha (The Opening).pdf" class="pdf-link">Tafsir Ibn
+                Kathir
+                - 001.Surah Al Fatiha (The Opening)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 002.Surah Al Baqara (The Cow) I (1-185).pdf" class="pdf-link">Tafsir Ibn
+                Kathir - 002.Surah Al Baqara (The Cow) I (1-185)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 002.Surah Al Baqara (The Cow) II (186-286).pdf" class="pdf-link">Tafsir
+                Ibn Kathir - 002.Surah Al Baqara (The Cow) II (186-286)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 003.Surah Al Imran (The Family of Imran).pdf" class="pdf-link">Tafsir
+                Ibn
+                Kathir - 003.Surah Al Imran (The Family of Imran)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 004.Surah An Nisa (The Women).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                004.Surah An Nisa (The Women)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 005.Surah Al Maida (The Table of Spread).pdf" class="pdf-link">Tafsir
+                Ibn
+                Kathir - 005.Surah Al Maida (The Table of Spread)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 006.Surah Al Anam (The Cattle).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                006.Surah Al Anam (The Cattle)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 007.Surah Al Araf (The Heights).pdf" class="pdf-link">Tafsir Ibn Kathir
+                -
+                007.Surah Al Araf (The Heights)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 008.Surah Al Anfal (Spoils of war, booty).pdf" class="pdf-link">Tafsir
+                Ibn Kathir - 008.Surah Al Anfal (Spoils of war, booty)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 009.Surah At Taubah (Repentance).pdf" class="pdf-link">Tafsir Ibn Kathir
+                - 009.Surah At Taubah (Repentance)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 010.Surah Yunus (Jonah).pdf" class="pdf-link">Tafsir Ibn
+                Kathir -
+                010.Surah Yunus (Jonah)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 011.Surah Hud (Hud).pdf" class="pdf-link">Tafsir Ibn
+                Kathir - 011.Surah
+                Hud (Hud)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 012.Surah Yusuf (Joseph).pdf" class="pdf-link">Tafsir
+                Ibn Kathir -
+                012.Surah Yusuf (Joseph)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 013.Surah Ar Rad (The Thunder).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                013.Surah Ar Rad (The Thunder)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 014.Surah Ibrahim (Abraham).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                014.Surah Ibrahim (Abraham)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 015.Surah Al Hijr (Al Hijr valley).pdf" class="pdf-link">Tafsir Ibn
+                Kathir - 015.Surah Al Hijr (Al Hijr valley)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 016.Surah An Nahl (The Bee).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                016.Surah An Nahl (The Bee)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 017.Surah Al Isra (The Night Journey).pdf" class="pdf-link">Tafsir Ibn
+                Kathir - 017.Surah Al Isra (The Night Journey)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 018.Surah Al Kahf (The Cave).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                018.Surah Al Kahf (The Cave)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 019.Surah Maryam (Mary).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                019.Surah Maryam (Mary)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 020.Surah Ta Ha (Taha).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                020.Surah Ta Ha (Taha)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 021.Surah Al Anbiya (The Prophets).pdf" class="pdf-link">Tafsir Ibn
+                Kathir - 021.Surah Al Anbiya (The Prophets)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 022.Surah Al Hajj (The Pilgrimage).pdf" class="pdf-link">Tafsir Ibn
+                Kathir - 022.Surah Al Hajj (The Pilgrimage)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 023.Surah Al Mumenoon (The Believers).pdf" class="pdf-link">Tafsir Ibn
+                Kathir - 023.Surah Al Mumenoon (The Believers)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 024.Surah An Noor (The Light).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                024.Surah An Noor (The Light)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 025.Surah Al Furqan (The Standard).pdf" class="pdf-link">Tafsir Ibn
+                Kathir - 025.Surah Al Furqan (The Standard)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 026.Surah Ash Shuara (The Poets).pdf" class="pdf-link">Tafsir Ibn Kathir
+                - 026.Surah Ash Shuara (The Poets)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 027.Surah An Naml (The Ant).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                027.Surah An Naml (The Ant)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 028.Surah Al Qasas (The Story).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                028.Surah Al Qasas (The Story)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 029.Surah Al Ankabut (The Spider).pdf" class="pdf-link">Tafsir Ibn
+                Kathir
+                - 029.Surah Al Ankabut (The Spider)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 030.Surah Ar Rum (The Romans).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                030.Surah Ar Rum (The Romans)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 031.Surah Luqman (Luqman).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                031.Surah Luqman (Luqman)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 032.Surah As Sajda (The Prostration).pdf" class="pdf-link">Tafsir Ibn
+                Kathir - 032.Surah As Sajda (The Prostration)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 033.Surah Al Ahzab (The Coalition).pdf" class="pdf-link">Tafsir Ibn
+                Kathir - 033.Surah Al Ahzab (The Coalition)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 034.Surah Saba (Saba).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                034.Surah
+                Saba (Saba)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 035.Surah Fatir (Originator).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                035.Surah Fatir (Originator)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 036.Surah Ya Seen (Ya Seen).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                036.Surah Ya Seen (Ya Seen)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 037.Surah As Saaffat (Those Who Set The Ranks).pdf"
+                class="pdf-link">Tafsir Ibn Kathir - 037.Surah As Saaffat (Those Who Set The Ranks)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 038.Surah Sad (Sad).pdf" class="pdf-link">Tafsir Ibn Kathir - 038.Surah
+                Sad (Sad)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 039.Surah Az Zumar (The Troops).pdf" class="pdf-link">Tafsir Ibn Kathir
+                -
+                039.Surah Az Zumar (The Troops)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 040.Surah Ghafir (Al-Mumin)(The Forgiver).pdf" class="pdf-link">Tafsir
+                Ibn Kathir - 040.Surah Ghafir (Al-Mumin)(The Forgiver)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 041.Surah Fussilat (Explained in detail).pdf" class="pdf-link">Tafsir
+                Ibn
+                Kathir - 041.Surah Fussilat (Explained in detail)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 042.Surah Ash Shura (Council, Consultation).pdf" class="pdf-link">Tafsir
+                Ibn Kathir - 042.Surah Ash Shura (Council, Consultation)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 043.Surah Az Zukhruf (Ornaments of God).pdf" class="pdf-link">Tafsir Ibn
+                Kathir - 043.Surah Az Zukhruf (Ornaments of God)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 044.Surah Ad Dukhan (The Smoke).pdf" class="pdf-link">Tafsir Ibn Kathir
+                -
+                044.Surah Ad Dukhan (The Smoke)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 045.Surah Al Jathiya (Crouching).pdf" class="pdf-link">Tafsir Ibn Kathir
+                - 045.Surah Al Jathiya (Crouching)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 046.Surah Al Ahqaf (The Wind-Curved Sandhills).pdf"
+                class="pdf-link">Tafsir Ibn Kathir - 046.Surah Al Ahqaf (The Wind-Curved Sandhills)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 047.Surah Muhammad (ﷺ).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                047.Surah Muhammad (ﷺ)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 048.Surah Al Fath (The Victory).pdf" class="pdf-link">Tafsir Ibn Kathir
+                -
+                048.Surah Al Fath (The Victory)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 049.Surah Al Hujurat (The Private Appartments).pdf"
+                class="pdf-link">Tafsir Ibn Kathir - 049.Surah Al Hujurat (The Private Appartments)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 050.Surah Qaf (Qaf).pdf" class="pdf-link">Tafsir Ibn Kathir - 050.Surah
+                Qaf (Qaf)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 051.Surah Az Dhariyat (The Winnowing Winds).pdf" class="pdf-link">Tafsir
+                Ibn Kathir - 051.Surah Az Dhariyat (The Winnowing Winds)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 052.Surah At Tur (Mount Sinai).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                052.Surah At Tur (Mount Sinai)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 053.Surah An Najm (The Star).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                053.Surah An Najm (The Star)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 054.Surah Al Qamar (The Moon).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                054.Surah Al Qamar (The Moon)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 055.Surah Ar Rahman (The Beneficent).pdf" class="pdf-link">Tafsir Ibn
+                Kathir - 055.Surah Ar Rahman (The Beneficent)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 056.Surah Al Waqia (The Event,The Inevitable).pdf"
+                class="pdf-link">Tafsir Ibn Kathir - 056.Surah Al Waqia (The Event,The Inevitable)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 057.Surah Al Hadid (The Iron).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                057.Surah Al Hadid (The Iron)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 058.Surah Al Mujadila (She That Disputes).pdf" class="pdf-link">Tafsir
+                Ibn Kathir - 058.Surah Al Mujadila (She That Disputes)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 059.Surah Al Hashr (Exile).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                059.Surah Al Hashr (Exile)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 060.Surah Al Mumtahina (She That Is To Be Examined).pdf"
+                class="pdf-link">Tafsir Ibn Kathir - 060.Surah Al Mumtahina (She That Is To Be Examined)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 061.Surah As Saff (The Ranks).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                061.Surah As Saff (The Ranks)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 062.Surah Al Jumua (The Congregation, Friday).pdf"
+                class="pdf-link">Tafsir Ibn Kathir - 062.Surah Al Jumua (The Congregation, Friday)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 063.Surah Al Munafiqoon (The Hypocrites).pdf" class="pdf-link">Tafsir
+                Ibn
+                Kathir - 063.Surah Al Munafiqoon (The Hypocrites)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 064.Surah At Taghabun (Mutual Disillusion).pdf" class="pdf-link">Tafsir
+                Ibn Kathir - 064.Surah At Taghabun (Mutual Disillusion)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 065.Surah At Talaq (Divorce).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                065.Surah At Talaq (Divorce)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 066.Surah At Tahrim (Banning).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                066.Surah At Tahrim (Banning)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 067.Surah Al Mulk (The Sovereignty).pdf" class="pdf-link">Tafsir Ibn
+                Kathir - 067.Surah Al Mulk (The Sovereignty)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 068.Surah Al Qalam (The Pen).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                068.Surah Al Qalam (The Pen)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 069.Surah Al Haqqa (The Reality).pdf" class="pdf-link">Tafsir Ibn Kathir
+                - 069.Surah Al Haqqa (The Reality)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 070.Surah Al Maarij (The Ascending Stairways).pdf"
+                class="pdf-link">Tafsir Ibn Kathir - 070.Surah Al Maarij (The Ascending Stairways)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 071.Surah Nooh (Nooh).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                071.Surah
+                Nooh (Nooh)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 072.Surah Al Jinn (The Jinn).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                072.Surah Al Jinn (The Jinn)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 073.Surah Al Muzammil (The Enshrouded One).pdf" class="pdf-link">Tafsir
+                Ibn Kathir - 073.Surah Al Muzammil (The Enshrouded One)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 074.Surah Al Mudathir (The Cloaked One).pdf" class="pdf-link">Tafsir Ibn
+                Kathir - 074.Surah Al Mudathir (The Cloaked One)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 075.Surah Al Qiyama (The Rising Of The Dead).pdf"
+                class="pdf-link">Tafsir
+                Ibn Kathir - 075.Surah Al Qiyama (The Rising Of The Dead)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 076.Surah Al - Insaan (The Man).pdf" class="pdf-link">Tafsir Ibn Kathir
+                -
+                076.Surah Al - Insaan (The Man)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 077.Surah Al Mursalat (The Emissaries).pdf" class="pdf-link">Tafsir Ibn
+                Kathir - 077.Surah Al Mursalat (The Emissaries)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 078.Surah An Naba (The Tidings).pdf" class="pdf-link">Tafsir Ibn Kathir
+                -
+                078.Surah An Naba (The Tidings)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 079.Surah An Naziat (Those Who Drag Forth).pdf" class="pdf-link">Tafsir
+                Ibn Kathir - 079.Surah An Naziat (Those Who Drag Forth)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 080.Surah Abasa (He Frowned).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                080.Surah Abasa (He Frowned)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 081.Surah At Takwir (The Overthrowing).pdf" class="pdf-link">Tafsir Ibn
+                Kathir - 081.Surah At Takwir (The Overthrowing)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 082.Surah Al Infitar (The Cleaving).pdf" class="pdf-link">Tafsir Ibn
+                Kathir - 082.Surah Al Infitar (The Cleaving)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 083.Surah Al Mutaffifin (Defrauding).pdf" class="pdf-link">Tafsir Ibn
+                Kathir - 083.Surah Al Mutaffifin (Defrauding)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 084.Surah Al Inshiqaq (The Sundering, Splitting Open).pdf"
+                class="pdf-link">Tafsir Ibn Kathir - 084.Surah Al Inshiqaq (The Sundering, Splitting Open)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 085.Surah Al Burooj(The Mansions Of The Stars).pdf"
+                class="pdf-link">Tafsir Ibn Kathir - 085.Surah Al Burooj(The Mansions Of The Stars)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 086.Surah At Tariq (The Morning Star).pdf" class="pdf-link">Tafsir Ibn
+                Kathir - 086.Surah At Tariq (The Morning Star)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 087.Surah Al Ala (The Most High).pdf" class="pdf-link">Tafsir Ibn Kathir
+                - 087.Surah Al Ala (The Most High)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 088.Surah Al Ghashiya (The Overwhelming).pdf" class="pdf-link">Tafsir
+                Ibn
+                Kathir - 088.Surah Al Ghashiya (The Overwhelming)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 089.Surah Al Fajr (The Dawn).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                089.Surah Al Fajr (The Dawn)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 090.Surah Al Balad (The City).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                090.Surah Al Balad (The City)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 091.Surah Ash Shams (The Sun).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                091.Surah Ash Shams (The Sun)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 092.Surah Al Lail (The night).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                092.Surah Al Lail (The night)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 093.Surah Ad Dhuha (The Morning Hours).pdf" class="pdf-link">Tafsir Ibn
+                Kathir - 093.Surah Ad Dhuha (The Morning Hours)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 094.Surah Al Inshira (Solace).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                094.Surah Al Inshira (Solace)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 095.Surah At Tin (The Fig).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                095.Surah At Tin (The Fig)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 096.Surah Al Alaq (The Clot).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                096.Surah Al Alaq (The Clot)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 097.Surah Al Qadr (The Power).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                097.Surah Al Qadr (The Power)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 098.Surah Al Baiyina (The Clear Proof).pdf" class="pdf-link">Tafsir Ibn
+                Kathir - 098.Surah Al Baiyina (The Clear Proof)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 099.Surah Az Zilzal (The Earthquake).pdf" class="pdf-link">Tafsir Ibn
+                Kathir - 099.Surah Az Zilzal (The Earthquake)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 100.Surah Al Adiyat (The Chargers).pdf" class="pdf-link">Tafsir Ibn
+                Kathir - 100.Surah Al Adiyat (The Chargers)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 101.Surah Al Qaria (The Calamity).pdf" class="pdf-link">Tafsir Ibn
+                Kathir
+                - 101.Surah Al Qaria (The Calamity)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 102.Surah At Takathur (Competition).pdf" class="pdf-link">Tafsir Ibn
+                Kathir - 102.Surah At Takathur (Competition)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 103.Surah Al Asr (The Declining Day).pdf" class="pdf-link">Tafsir Ibn
+                Kathir - 103.Surah Al Asr (The Declining Day)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 104.Surah Al Humaza (The Traducer).pdf" class="pdf-link">Tafsir Ibn
+                Kathir - 104.Surah Al Humaza (The Traducer)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 105.Surah Al Fil (The Elephant).pdf" class="pdf-link">Tafsir Ibn Kathir
+                -
+                105.Surah Al Fil (The Elephant)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 106.Surah Quraysh (Quraish).pdf" class="pdf-link">Tafsir Ibn Kathir -
+                106.Surah Quraysh (Quraish)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 107.Surah Al Maun (Alms Giving).pdf" class="pdf-link">Tafsir Ibn Kathir
+                -
+                107.Surah Al Maun (Alms Giving)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 108.Surah Al Kauthar (Abundance).pdf" class="pdf-link">Tafsir Ibn Kathir
+                - 108.Surah Al Kauthar (Abundance)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 109.Surah Al Kafirun (The Disbelievers).pdf" class="pdf-link">Tafsir Ibn
+                Kathir - 109.Surah Al Kafirun (The Disbelievers)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 110.Surah An Nasr (The Succour).pdf" class="pdf-link">Tafsir Ibn Kathir
+                -
+                110.Surah An Nasr (The Succour)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 111.Surah Al Masadd(Lahab) (The Flame).pdf" class="pdf-link">Tafsir Ibn
+                Kathir - 111.Surah Al Masadd(Lahab) (The Flame)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 112.Surah Al Ikhlas (Absoluteness).pdf" class="pdf-link">Tafsir Ibn
+                Kathir - 112.Surah Al Ikhlas (Absoluteness)</a><br>
+            <a href="tafsir/Tafsir Ibn Kathir - 113.Surah Al Falaq (The Day Break) & 114.Surah An Nas (The Mankind).pdf"
+                class="pdf-link">Tafsir Ibn Kathir - 113.Surah Al Falaq (The Day Break) & 114.Surah An Nas (The
+                Mankind)</a><br>
+            <a href="books of knowledge/Tafsir al Qurtubi Introductio Abu Abdullah ibn Ahmad al Qurtubi.pdf"
+                class="pdf-link">Tafsir al Qurtubi Introductio Abu Abdullah ibn Ahmad al Qurtubi</a><br>
+            <a href="books of knowledge/Tafsir al-Qurtubi Vol. 1.pdf" class="pdf-link">Tafsir al-Qurtubi Vol. 1</a><br>
+            <a href="books of knowledge/Tafsir al-Qurtubi Vol. 2.pdf" class="pdf-link">Tafsir al-Qurtubi Vol. 2</a><br>
+            <a href="books of knowledge/Tafsir al-Qurtubi Vol. 3.pdf" class="pdf-link">Tafsir al-Qurtubi Vol. 3</a><br>
+            <a href="books of knowledge/Tafsir al-Qurtubi Vol. 4.pdf" class="pdf-link">Tafsir al-Qurtubi Vol. 4</a><br>
+            <a href="books of knowledge/Tafseer-As-Sadi-Volume-1-Juz-1-3.pdf"
+                class="pdf-link">Tafseer-As-Sadi-Volume-1-Juz-1-3</a><br>
+            <a href="books of knowledge/Tafseer-As-Sadi-Volume-2-Juz-4-6.pdf"
+                class="pdf-link">afseer-As-Sadi-Volume-2-Juz-4-6</a><br>
+            <a href="books of knowledge/Tafseer-As-Sadi-Volume-3-Juz-7-9.pdf"
+                class="pdf-link">Tafseer-As-Sadi-Volume-3-Juz-7-9</a><br>
+            <a href="books of knowledge/Tafseer-As-Sadi-Volume-4-Juz-10-12.pdf"
+                class="pdf-link">Tafseer-As-Sadi-Volume-4-Juz-10-12</a><br>
+            <a href="books of knowledge/Tafseer-As-Sadi-Volume-5-Juz-13-15.pdf"
+                class="pdf-link">Tafseer-As-Sadi-Volume-5-Juz-13-15</a><br>
+            <a href="books of knowledge/Tafseer-As-Sadi-Volume-6-Juz-16-18.pdf"
+                class="pdf-link">Tafseer-As-Sadi-Volume-6-Juz-16-18</a><br>
+            <a href="books of knowledge/Tafseer-As-Sadi-Volume-7-Juz-19-21.pdf"
+                class="pdf-link">Tafseer-As-Sadi-Volume-7-Juz-19-21</a><br>
+            <a href="books of knowledge/Tafseer-As-Sadi-Volume-8-Juz-22-24.pdf"
+                class="pdf-link">Tafseer-As-Sadi-Volume-8-Juz-22-24</a><br>
+            <a href="books of knowledge/Tafseer-As-Sadi-Volume-9-Juz-25-27.pdf"
+                class="pdf-link">Tafseer-As-Sadi-Volume-9-Juz-25-27</a><br>
+            <a href="books of knowledge/Tafseer-As-Sadi-Volume-10-Juz-28-30.pdf"
+                class="pdf-link">Tafseer-As-Sadi-Volume-10-Juz-28-30</a><br>
+            <a href="books of knowledge/Quran_Workbook_V1.01.pdf" class="pdf-link">Quran Workbook by Quranic</a><br>
+            <a href="books of knowledge/The Removal of Blame From the Great Imams.pdf" class="pdf-link">The Removal of
+                Blame From the Great Imams by Ibn Taymiyyah</a><br>
+            <a href="books of knowledge/Sahih al-Bukhari in 1 file.pdf" class="pdf-link">Sahih al-Bukhari in 1
+                file</a><br>
+            <a href="books of knowledge/Explanation of Sahih Al Bukhari (The Book of Revelation Chp 1) Sheikh Al Uthaymeen.pdf"
+                class="pdf-link">Explanation of Sahih Al Bukhari (The Book of Revelation Chp 1) Sheikh Al
+                Uthaymeen</a><br>
+            <a href="books of knowledge/Sahih Muslim in 1 file.pdf" class="pdf-link">Sahih Muslim in 1
+                file</a><br>
+            <a href="books of knowledge/Explanation of Sharh Muqaddimah Sahih Muslim by Imam An Nawawi.pdf"
+                class="pdf-link">Explanation of Sharh Muqaddimah Sahih Muslim by Imam An Nawawi</a><br>
+            <a href="books of knowledge/Sunan Abu Dawud in 1 file.pdf" class="pdf-link">Sunan Abu Dawud in 1
+                file</a><br>
+            <a href="books of knowledge/Jami at-Tirmidhi in 1 file.pdf" class="pdf-link">Jami at-Tirmidhi in 1
+                file</a><br>
+            <a href="books of knowledge/Sunan an-Nasa i in 1 file.pdf" class="pdf-link">Sunan an-Nasa i in 1
+                file</a><br>
+            <a href="books of knowledge/Riyadis Saliheen Part 1.pdf" class="pdf-link">Riyad as Saliheen Part 1 by Hafiz
+                Salahuddin Yusuf</a><br>
+            <a href="books of knowledge/Riyadis Saliheen Part 2.pdf" class="pdf-link">Riyad as Saliheen Part 2 by Hafiz
+                Salahuddin Yusuf</a><br>
+            <a href="books of knowledge/Q A_Usool_Ath_Thalathah_Madrasa_Khadeejatul_Kubra_Mira_Road.pdf"
+                class="pdf-link">Aqeedah Thalathatul Usool by Sheikh Muhammad bin 'Abdul Wahhab</a><br>
+            <a href="books of knowledge/Usul-As-Sunnah.pdf" class="pdf-link">Usul As Sunnah by Imām Ahmad ibn
+                Ḥanbal</a><br>
+            <a href="books of knowledge/Explanation of a Summary of Aqeedat Hamawiyyah by Imaam Muhammad ibn Saalih al‐‘Uthaymeen.pdf"
+                class="pdf-link">Explanation
+                of a
+                Summary of Aqeedat Hamawiyyah by Imaam Muhammad ibn Saalih al‐‘Uthaymeen</a><br>
+            <a href="books of knowledge/Commentary_on_Kitab_At_Tawheed_Vol_1_Sh_Al_ Uthaymeen_compressed.pdf"
+                class="pdf-link">Commentary on Kitab At Tawheed Vol 1 Sheikh Al Uthaymeen</a><br>
+            <a href="books of knowledge/Commentary_on_Kitab_At_Tawheed_Vol_2_Sh_Al_ Uthaymeen_compressed.pdf"
+                class="pdf-link">Commentary on Kitab At Tawheed Vol 2 Sheikh Al Uthaymeen</a><br>
+            <a href="books of knowledge/Kitab at-Tawheed Explained by Imām Muḥammad Ibn ‘Abdul Wahhab At Tamīmī.pdf"
+                class="pdf-link">Kitab
+                at Tawheed explained by Imām Muḥammad Ibn ‘Abdul Wahhab At Tamīmī</a><br>
+            <a href="books of knowledge/Commentary on the Creed of at-Tahawi by Ibn Abi al-Izz.pdf"
+                class="pdf-link">Commentary on the Creed of at Tahawi by Ibn Abi al-Izz</a><br>
+            <a href="books of knowledge/The Creed of al-Wasitiyyah - Ibn Taymiyyah.pdf" class="pdf-link">The Creed of
+                al Wasitiyyah - Ibn Taymiyyah</a><br>
+            <a href="books of knowledge/Al Wasiyyah of Imam Ibn Qudamah al-Maqdīsī.pdf" class="pdf-link">Al Wasiyyah of
+                Imam Ibn Qudamah al-Maqdīsī</a><br>
+            <a href="books of knowledge/Commentary_on_the_Three_Fundamental.pdf" class="pdf-link">Commentary on the
+                Three
+                Fundamental by Muhammad bin 'Abdul Wahhab</a><br>
+            <a href="books of knowledge/Sharh Kashf ash-Shubuhāt   Transcribed.pdf" class="pdf-link">Sharh Kashf
+                ash Shubuhāt
+                by Sh. Haytham Sayfaddin</a><br>
+            <a href="books of knowledge/Towards_Understanding_Tadmuriyyah_Shaykh_Muhammad_Al_Uthaymeen.pdf"
+                class="pdf-link">Towards Understanding Tadmuriyyah Shaykh Muhammad Al Uthaymeen</a><br>
+
+            <a href="books of knowledge/How To Calculate The Zakat Of Your Money.pdf" class="pdf-link">How To Calculate
+                The
+                Zakat Of Your Money by Dr. Saleh Bin Muhammad Al Fawzan
+            </a><br>
+            <a href="books of knowledge/Book of Emaan - Ibn Taymiyyah.pdf" class="pdf-link">Book of Emaan - Ibn
+                Taymiyyah</a><br>
+            <a href="books of knowledge/Expounds On Islam - Ibn Taymiyyah.pdf" class="pdf-link">Expounds On Islam - Ibn
+                Taymiyyah</a><br>
+            <a href="books of knowledge/Enjoining Good and forbidding Evil.pdf" class="pdf-link">Enjoining Good and
+                forbidding Evil - Ibn Taymiyyah</a><br>
+            <a href="books of knowledge/Diseases Of The Hearts And Their Cures.pdf" class="pdf-link">Diseases Of The
+                Hearts And Their Cures - Ibn Taymiyyah</a><br>
+            <a href="books of knowledge/The Friends of Allah The Friends of Shaytan Ibn Taymiyyah.pdf"
+                class="pdf-link">The Friends of Allah The Friends of Shaytan - Ibn Taymiyyah</a><br>
+            <a href="books of knowledge/The Relief From Distress.pdf" class="pdf-link">The Relief From Distress - Ibn
+                Taymiyyah</a><br>
+            <a href="books of knowledge/Spiritual Disease and Its Cure.pdf" class="pdf-link">Spiritual Disease and Its
+                Cure - Ibn Taymiyyah</a><br>
+            <a href="books of knowledge/Waswasah.pdf" class="pdf-link">Waswasah - Ibn Qayyim Al-Juziyyah</a><br>
+            <a href="books of knowledge/The Spiritual Cure.pdf" class="pdf-link">The Spiritual Cure - Ibn Qayyim
+                Al-Juziyyah</a><br>
+            <a href="books of knowledge/The Dress Code for the Muslim Women Sh. al Albani.pdf" class="pdf-link">The
+                Dress
+                Code for the Muslim Women - Sh. al Albani</a><br>
+            <a href="books of knowledge/Description of the Prophet's Prayer -  Shaykh-al Albani.pdf"
+                class="pdf-link">Description of the Prophet's Prayer - Shaykh-al Albani</a><br>
+            <a href="books of knowledge/Tafseer Soorah al-Kahf - Sh. Muḥammad al Uthaymeen.pdf" class="pdf-link">Tafseer
+                Soorah al-Kahf - Sh. Muḥammad al Uthaymeen</a><br>
+            <a href="books of knowledge/The Book of Janaa'iz Shaykh Muhammad bin Saleh al Uthaymeen.pdf"
+                class="pdf-link">The Book of Janaa'iz - Shaykh Muhammad bin Saleh al Uthaymeen</a><br>
+            <a href="books of knowledge/Exp. Umdatul-Ahkaam - The Book of Hajj - Sh. al- Uthaymeen.pdf"
+                class="pdf-link">Explained Umdatul-Ahkaam - The Book of Hajj - Sh. al Uthaymeen</a><br>
+            <a href="books of knowledge/Sticking to the Prophetic Sunnah & Its Effects Sh. al Uthaymeen.pdf"
+                class="pdf-link">Sticking to the Prophetic Sunnah & Its Effects - Sh. al Uthaymeen</a><br>
+            <a href="books of knowledge/The Cure - An Explanation of Surah al Fatihah Sh. al Uthaymeen.pdf"
+                class="pdf-link">The Cure - An Explanation of Surah al Fatihah - Sh. al Uthaymeen</a><br>
+            <a href="books of knowledge/Upright Moral Character Sh. Muhammad al Uthaymeen.pdf" class="pdf-link">Upright
+                Moral Character - Sh. Muhammad al Uthaymeen</a><br>
+            <a href="books of knowledge/Refinement of  A Message in Wudhoo, Ghusl and Salah  Sh. al Uthaymeen.pdf"
+                class="pdf-link">Refinement of A Message in Wudhoo, Ghusl and Salah - Sh. al Uthaymeen</a><br>
+            <a href="books of knowledge/Exemplary Principles Concerning The Beautiful Names and Attributes.pdf"
+                class="pdf-link">Exemplary Principles Concerning The Beautiful Names and Attributes - Sh. Muhammad al
+                Uthaymeen</a><br>
+            <a href="books of knowledge/54 Q A about  Eid Prayers - Sh. al Uthaymeen.pdf" class="pdf-link">54 Q A about
+                Eid Prayers - Sh. al Uthaymeen</a><br>
+            <a href="books of knowledge/The Role of the Woman in Rectifying the Society Sheikh al  Uthaymeen.pdf"
+                class="pdf-link">The Role of the Woman in Rectifying the Society - Sheikh al Uthaymeen</a><br>
+            <a href="books of knowledge/Zaad al-Maad - Abridged by Ibn al Qayyim.pdf" class="pdf-link">Zaad al-Maad -
+                Abridged by Ibn al Qayyim</a><br>
+            <a href="books of knowledge/Medicine of the Prophet - Ibn Qayyim.pdf" class="pdf-link">Medicine of the
+                Prophet - Ibn Qayyim</a><br>
+            <a href="books of knowledge/The Path to Guidance by Ibn al Qayyim.pdf" class="pdf-link">The Path to Guidance
+                by Ibn al Qayyim</a><br>
+            <a href="books of knowledge/Patience and Gratitude by Ibn al Qayyim.pdf" class="pdf-link">Patience and
+                Gratitude by Ibn al Qayyim</a><br>
+            <a href="books of knowledge/The Secret to a Happy Life - Ibn al Qayyim al-Jawziyyah.pdf"
+                class="pdf-link">The
+                Secret to a Happy Life - Ibn al Qayyim al-Jawziyyah</a><br>
+            <a href="books of knowledge/Al Fawaid - A Collection of Wise Sayings by Ibn al Qayyim.pdf"
+                class="pdf-link">Al Fawaid - A Collection of Wise Sayings by Ibn al Qayyim</a><br>
+            <a href="books of knowledge/A Principle Concerning Patience   Gratitude Shaykh al Islam Ibn Taymiyyah.pdf"
+                class="pdf-link">A Principle Concerning Patience Gratitude - Shaykh al Islam Ibn Taymiyyah</a><br>
+            <a href="books of knowledge/Questions and Answers about the Rafidah.pdf" class="pdf-link">Questions and
+                Answers about the Rafidah - Shaykh al Islam Ibn Taymiyyah</a><br>
+            <a href="books of knowledge/Introduction to the principles of Tafsir by Ibn Taymiyyah.pdf"
+                class="pdf-link">Introduction to the principles of Tafsir by Ibn Taymiyyah</a><br>
+            <a href="books of knowledge/Ibn Taymiyya and the Attributes of God.pdf" class="pdf-link">Ibn Taymiyya and
+                the
+                Attributes of God</a><br>
+            <a href="books of knowledge/Purify My Heart.pdf" class="pdf-link">Purify My Heart - Shaykh al Islam Ibn
+                Taymiyyah,Ibn al Qayyim al-Jawziyyah,Shaykh Abu Islam</a><br>
+            <a href="books of knowledge/Characteristics of the Hypocrites.pdf" class="pdf-link">Characteristics of the
+                Hypocrites - Ibn al Qayyim al-Jawziyyah</a><br>
+            <a href="books of knowledge/Timeless Seeds of Advice by B. B. Abdulla.pdf" class="pdf-link">Timeless Seeds
+                of Advice -The Sayings of Prophet Muhammad صلى الله عليه وسلم , Ibn
+                Taymiyyah, Ibn al Qayyim, Ibn al Jawzi and
+                Other Prominent Scholars in Bringing
+                Comfort and Hope to the Soul by B. B. Abdulla</a><br>
+            <a href="books of knowledge/Supporting the Distressed Against the Tricks of Satan Ibn al Qayyim.pdf"
+                class="pdf-link">Supporting the Distressed Against the Tricks of Satan - Ibn al Qayyim</a><br>
+            <a href="books of knowledge/The Dunya and Its Reality - Ibn Al Qayyim.pdf" class="pdf-link">The Dunya and
+                Its Reality - Ibn Al Qayyim</a><br>
+            <a href="books of knowledge/Supporting the Truth Ibn al Qayyim's Advice to Ahlus-Sunnah.pdf"
+                class="pdf-link">Supporting the Truth Ibn al Qayyim's Advice to Ahlus-Sunnah</a><br>
+            <a href="books of knowledge/Levels of People in the Hereafter - Ibn al Qayyim.pdf" class="pdf-link">Levels
+                of People in the Hereafter - Ibn al Qayyim</a><br>
+            <a href="books of knowledge/The Advice of Prophet Yahya Ibn Zakariya Explained by Ibn Al Qayyim.pdf"
+                class="pdf-link">The Advice of Prophet Yahya Ibn Zakariya Explained by Ibn Al Qayyim</a><br>
+            <a href="books of knowledge/Inner Dimensions of the Prayer by Ibn al Qayyim.pdf" class="pdf-link">Inner
+                Dimensions of the Prayer by Ibn al Qayyim</a><br>
+            <a href="books of knowledge/The Disease & The Cure Imam Ibn Al Qayyim.pdf" class="pdf-link">The Disease &
+                The
+                Cure - Imam Ibn Al Qayyim</a><br>
+            <a href="books of knowledge/Invocation of God - Ibn Qayyim.pdf" class="pdf-link">Invocation of God - Ibn
+                Qayyim</a><br>
+            <a href="books of knowledge/The Signs of a Fabricated Hadeeth - Ibn Qayyim al-Jawziyyah.pdf"
+                class="pdf-link">The Signs of a Fabricated Hadeeth - Ibn Qayyim al-Jawziyyah</a><br>
+            <a href="books of knowledge/Trials  Tribulations - Ibn Qayyim al-Jawziyyah.pdf" class="pdf-link">Trials
+                Tribulations - Ibn Qayyim al-Jawziyyah</a><br>
+            <a href="books of knowledge/The Spiritual Journey To Allah & His Messenger by Ibn al Qayyim.pdf"
+                class="pdf-link">The Spiritual Journey To Allah & His Messenger by Ibn al Qayyim</a><br>
+            <a href="books of knowledge/One Hundred Pieces Of Advice - Ibn Qayyim.pdf" class="pdf-link">One Hundred
+                Pieces Of Advice - Ibn Qayyim</a><br>
+            <a href="books of knowledge/The Dispraise of al-Hawaa by Ibn al Qayyim.pdf" class="pdf-link">The Dispraise
+                of al-Hawaa(The Lowly Desire) by Ibn al Qayyim</a><br>
+            <a href="books of knowledge/The Way to Patience and Gratitude by Ibn al Qayyim.pdf" class="pdf-link">The Way
+                to Patience and Gratitude by Ibn al Qayyim</a><br>
+            <a href="books of knowledge/The Biography Of Imam Ibn Al Qayyim by Salahud-Din Ali Abdul Mawjud.pdf"
+                class="pdf-link">The Biography Of Imam Ibn Al Qayyim by Salahud-Din Ali Abdul Mawjud</a><br>
+            <a href="books of knowledge/On Knowledge by Ibn Qayyim.pdf" class="pdf-link">On Knowledge by Ibn
+                Qayyim</a><br>
+            <a href="books of knowledge/Tawbah by Ibn Qayyim.pdf" class="pdf-link">Tawbah by
+                Ibn Qayyim</a><br>
+            <a href="books of knowledge/Fear of Allah by Imam Ghazali Ibn Qayyim and Ibn Rajab Hanbali.pdf"
+                class="pdf-link">Fear of Allah by Imam Ghazali Ibn Qayyim and Ibn Rajab Hanbali</a><br>
+            <a href="books of knowledge/The wayfarer's Journey Towards God by Imam Ibn Qayyim Al Jawziyyah.pdf"
+                class="pdf-link">The wayfarer's Journey Towards God by Imam Ibn Qayyim Al Jawziyyah</a><br>
+            <a href="books of knowledge/Driving the souls to the Abodes of Happiness by Imam Ibn al Qayyim.pdf"
+                class="pdf-link">Driving the souls to the Abodes of Happiness by Imam Ibn al Qayyim</a><br>
+            <a href="books of knowledge/Authentic Dream Interpretations From the Works of - Ibn al Qayyim.pdf"
+                class="pdf-link">Authentic Dream Interpretations From the Works of - Ibn al Qayyim</a><br>
+            <a href="books of knowledge/The Keys to Happiness by Ibn Al Qayyim Explained by Sh. Muhammad Aman al Jamī.pdf"
+                class="pdf-link">The Keys to Happiness by Ibn Al Qayyim Explained by Sh. Muhammad Aman al Jami</a><br>
+            <a href="books of knowledge/Gaining Rewards by Ibn Taymiyyah.pdf" class="pdf-link">Gaining Rewards by Ibn
+                Taymiyyah</a><br>
+            <a href="books of knowledge/SOUL Condition of Dead   Living By Ibn Qayyim.pdf" class="pdf-link">SOUL
+                Condition of Dead Living By Ibn Qayyim</a><br>
+            <a href="books of knowledge/The Principle of Patience by Ibn Taymiyyah.pdf" class="pdf-link">The Principle
+                of Patience by Ibn Taymiyyah</a><br>
+            <a href="books of knowledge/Public duties in Islam - Ibn Taymiyah.pdf" class="pdf-link">Public duties in
+                Islam - Ibn Taymiyah</a><br>
+            <a href="books of knowledge/Excellence of Patience & Gratefulness - Ibn al Qayyim.pdf"
+                class="pdf-link">Excellence of Patience & Gratefulness - Ibn al Qayyim</a><br>
+            <a href="books of knowledge/Economic Concepts of Ibn Taymiyyah.pdf" class="pdf-link">Economic Concepts of
+                Ibn Taymiyyah</a><br>
+            <a href="books of knowledge/Kitab ul Iman by Ibn Taymiyyah.pdf" class="pdf-link">Kitab ul Iman by Ibn
+                Taymiyyah</a><br>
+            <a href="books of knowledge/Zad Ul-Ma'ad Provisions for the Hereafter Vol 1 - Ibn al Qayyim.pdf"
+                class="pdf-link">Zad Ul Ma'ad Provisions for the Hereafter Vol 1 - Ibn al Qayyim</a><br>
+            <a href="books of knowledge/Zad Ul-Ma'ad Provisions for the Hereafter Vol 2 - Ibn al Qayyim.pdf"
+                class="pdf-link">Zad Ul Ma'ad Provisions for the Hereafter Vol 2 - Ibn al Qayyim</a><br>
+            <a href="books of knowledge/Zad Ul-Ma'ad Provisions for the Hereafter Vol 3 - Ibn al Qayyim.pdf"
+                class="pdf-link">Zad Ul Ma'ad Provisions for the Hereafter Vol 3 - Ibn al Qayyim</a><br>
+            <a href="books of knowledge/Zad Ul-Ma'ad Provisions for the Hereafter Vol 4 - Ibn al Qayyim.pdf"
+                class="pdf-link">Zad Ul Ma'ad Provisions for the Hereafter Vol 4 - Ibn al Qayyim</a><br>
+            <a href="books of knowledge/Provisions Of The Afterlife.pdf" class="pdf-link">Provisions Of The Afterlife -
+                Imam Ibn Qayyim Al Jawziyyah</a><br>
+            <a href="books of knowledge/Taqwa - The Provision of Believers.pdf" class="pdf-link">Taqwa - The Provision
+                of
+                Believers - Imam Ibn Qayyim Al Jawziyyah</a><br>
+            <a href="books of knowledge/Newborn Baby Guide - Ibn al Qayyim.pdf" class="pdf-link">Newborn Baby Guide -
+                Ibn
+                al Qayyim</a><br>
+            <a href="books of knowledge/Remembrance of the Most Merciful - Ibn al Qayyim.pdf"
+                class="pdf-link">Remembrance of the Most Merciful - Ibn al Qayyim</a><br>
+            <a href="books of knowledge/Life After Death and Affairs of the Unseen Sh. Salih Fawzan.pdf"
+                class="pdf-link">Life After Death and Affairs of the Unseen Sh. Salih Fawzan</a><br>
+            <a href="books of knowledge/The Nature of Fasting - Ibn Taymiyyah.pdf" class="pdf-link">The Nature of
+                Fasting
+                - Ibn Taymiyyah</a><br>
+            <a href="books of knowledge/Gardens of Purification - Ibn Taymiyyah.pdf" class="pdf-link">Gardens of
+                Purification - Ibn Taymiyyah</a><br>
+            <a href="books of knowledge/Seeking Forgiveness - Ibn Taymiyyah.pdf" class="pdf-link">Seeking Forgiveness -
+                Ibn Taymiyyah</a><br>
+            <a href="books of knowledge/Ibn Taymiyyah, The Mongols and The People Who Do Not Abide by the Laws of Islam.pdf"
+                class="pdf-link">Ibn Taymiyyah, The Mongols and The People Who Do Not Abide by the Laws of Islam</a><br>
+            <a href="books of knowledge/The Principle of Love Desire Ibn Taymiyyah.pdf" class="pdf-link">The Principle
+                of
+                Love Desire Ibn Taymiyyah</a><br>
+            <a href="books of knowledge/Swearing by other than Allah & Prayer towards the Graves - Ibn Taymiyyah.pdf"
+                class="pdf-link">Swearing by other than Allah & Prayer towards the Graves - Ibn Taymiyyah</a><br>
+            <a href="books of knowledge/Benefits Of Fearing Allah By Imam Muhammad Salih al Uthaymeen.pdf"
+                class="pdf-link">Benefits Of Fearing Allah By Imam Muhammad Salih al Uthaymeen</a><br>
+            <a href="books of knowledge/Explanation of Removal of Doubts of the People of Shirk by Uthaymeen.pdf"
+                class="pdf-link">Explanation of Removal of Doubts of the People of Shirk by Uthaymeen</a><br>
+
+            <a href="books of knowledge/Difference between Advising Shaming - Ibn Rajab.pdf" class="pdf-link">Difference
+                between Advising Shaming - Ibn Rajab</a><br>
+            <a href="books of knowledge/Al Hijamah(Cupping) Healing The Sunnah Way.pdf" class="pdf-link">Al
+                Hijamah(Cupping) Healing The Sunnah Way</a><br>
+            <a href="books of knowledge/The Sublime Beauty Of The Prophet ﷺ by Al Imam Muhammad Ibn 'Isa al Tirmidhi (compressed).pdf"
+                class="pdf-link">The Sublime Beauty Of The Prophet ﷺ by Al Imam Muhammad Ibn 'Isa al Tirmidhi
+                (compressed)</a><br>
+            <a href="books of knowledge/The Evil of Craving for Wealth and Status by Al Imam Ibn Rajab ﻿Hanbali.pdf"
+                class="pdf-link">The Evil of Craving for Wealth and Status by Al Imam Ibn Rajab Hanbali</a><br>
+            <a href="books of knowledge/Abridgment of the Compendium of Ologies and Aphorisms(Mukhtasar Jami’ Al Uloom Wal Hikam) by Al Imam Ibn Rajab ﻿Hanbali.pdf"
+                class="pdf-link">Abridgment of the Compendium of Ologies and Aphorisms(Mukhtasar Jami’ Al Uloom Wal
+                Hikam) by Al Imam Ibn Rajab Hanbali</a><br>
+            <a href="books of knowledge/A Poem on the Disparagement of the Hardness of the Heart by Al-Imam Ibn Rajab rahimahullaah.pdf"
+                class="pdf-link">A Poem on the Disparagement of the Hardness of the Heart by Al-Imam Ibn Rajab
+                rahimahullaah</a><br>
+            <a href="books of knowledge/The Difference between Advising and Condemning by Al Imam Ibn Rajab ﻿Hanbali.pdf"
+                class="pdf-link">The Difference between Advising and Condemning by Al Imam Ibn Rajab Hanbali</a><br>
+            <a href="books of knowledge/Explanation of the Prophet's ﷺ advice to Ibn Abbas by Al Imam Ibn Rajab ﻿Hanbali.pdf"
+                class="pdf-link">Explanation of the Prophet's ﷺ advice to Ibn Abbas by Al Imam Ibn Rajab Hanbali</a><br>
+            <a href="books of knowledge/The Key to Paradise by Al Imam Ibn Rajab ﻿Hanbali.pdf" class="pdf-link">The Key
+                to Paradise by Al Imam Ibn Rajab Hanbali</a><br>
+            <a href="books of knowledge/The Journey To Allah by Al Imam Ibn Rajab ﻿Hanbali.pdf" class="pdf-link">The
+                Journey To Allah by Al Imam Ibn Rajab Hanbali</a><br>
+            <a href="books of knowledge/The Compendium Of Knowledge And Wisdom(Jamial Hikam) by Al Imam Ibn Rajab ﻿Hanbali.pdf"
+                class="pdf-link">The Compendium Of Knowledge And Wisdom(Jamial Hikam) by Al Imam Ibn Rajab
+                Hanbali</a><br>
+            <a href="books of knowledge/Fleeing From The Fire - Ibn Rajab Al Hanbali.pdf" class="pdf-link">Fleeing From
+                The Fire - Ibn Rajab Al Hanbali</a><br>
+            <a href="books of knowledge/Legacy Of The Prophet by Al Imam Ibn Rajab ﻿Hanbali.pdf" class="pdf-link">Legacy
+                Of The Prophet by Al Imam Ibn Rajab Hanbali</a><br>
+            <a href="books of knowledge/The Three That Follow To The Grave - Al Imam Ibn Rajab ﻿Hanbali.pdf"
+                class="pdf-link">The Three That Follow To The Grave - Al Imam Ibn Rajab Hanbali</a><br>
+            <a href="books of knowledge/Sittings During Teh Best Month Of Ramadan - Sh. Muhammad bin Salih Al 'Uthaymeen (compressed).pdf"
+                class="pdf-link">Sittings During Teh Best Month Of Ramadan - Sh. Muhammad bin Salih Al 'Uthaymeen
+                (compressed)</a><br>
+            <a href="books of knowledge/The Ruling On Abandoning The Praye by Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">The Ruling On Abandoning The Praye by Sh. Muhammad bin Salih Al 'Uthaymeen</a><br>
+            <a href="books of knowledge/Commentary On Sheikh Islam Ibn Taymiyyah's Al Aqeedah Al Wasitiyyah vol 1 by Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">Commentary On Sheikh Islam Ibn Taymiyyah's Al Aqeedah Al Wasitiyyah vol 1 by Sh.
+                Muhammad bin Salih Al 'Uthaymeen</a><br>
+            <a href="books of knowledge/Commentary On Sheikh Islam Ibn Taymiyyah's Al Aqeedah Al Wasitiyyah vol 2 by Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">Commentary On Sheikh Islam Ibn Taymiyyah's Al Aqeedah Al Wasitiyyah vol 2 by Sh.
+                Muhammad bin Salih Al 'Uthaymeen</a><br>
+            <a href="books of knowledge/The Book Of Knowledge vol 1 by Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">The Book Of Knowledge vol 1 by Sh. Muhammad bin Salih Al 'Uthaymeen</a><br>
+            <a href="books of knowledge/Manifesting The Comprehensiveness of Islam __and Danger of Heterodoxy Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">Manifesting The Comprehensiveness of Islam and Danger of Heterodoxy Sh. Muhammad bin
+                Salih Al 'Uthaymeen</a><br>
+            <a href="books of knowledge/Juristic Rulings Relevant to Purification, __Prayer, and Funerals by Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">Juristic Rulings Relevant to Purification, Prayer, and Funerals by Sh. Muhammad bin
+                Salih Al 'Uthaymeen</a><br>
+            <a href="books of knowledge/The Fundamentals Of Tafseer & Tafseer Of Surah al Fatihah, al Ikhlas, al Falaq and an Nas by Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">The Fundamentals Of Tafseer & Tafseer Of Surah al Fatihah, al Ikhlas, al Falaq and an
+                Nas by Sh. Muhammad bin Salih Al 'Uthaymeen</a><br>
+            <a href="books of knowledge/Allahs Names by Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">Allah's
+                Names by Sh. Muhammad bin Salih Al 'Uthaymeen</a><br>
+            <a href="books of knowledge/Beneficial Stories from Riyad as Salihin by Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">Beneficial Stories from Riyad as Salihin by Sh. Muhammad bin Salih Al
+                'Uthaymeen</a><br>
+            <a href="books of knowledge/Heart Softeners - Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">Heart Softeners - Sh. Muhammad bin Salih Al 'Uthaymeen</a><br>
+            <a href="books of knowledge/Pertaining Being Dutiful To The Parents & Upholding The Ties Of Kinskip by Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">Pertaining Being Dutiful To The Parents & Upholding The Ties Of Kinskip by Sh. Muhammad
+                bin Salih Al 'Uthaymeen</a><br>
+            <a href="books of knowledge/Explanation of Riyaadh Saliheen The Chapter On Hastening Towards Good Deeds by Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">Explanation of Riyaadh Saliheen The Chapter On Hastening Towards Good Deeds by Sh.
+                Muhammad bin Salih Al 'Uthaymeen</a><br>
+            <a href="books of knowledge/The Islamic Months by Ibn Rajab.pdf" class="pdf-link">The Islamic Months by Ibn
+                Rajab</a><br>
+            <a href="books of knowledge/On Bidding Farewell to Ramaḍān by Al Imam Ibn Rajab ﻿Hanbali.pdf"
+                class="pdf-link">On Bidding Farewell to Ramaḍān by Al Imam Ibn Rajab Hanbali</a><br>
+            <a href="books of knowledge/The Heirs(Inheritors) Of The Prophets by Al Imam Ibn Rajab ﻿Hanbali.pdf"
+                class="pdf-link">The Heirs(Inheritors) Of The Prophets by Al Imam Ibn Rajab Hanbali</a><br>
+            <a href="books of knowledge/Excellence of Knowledge by Al Imam Ibn Rajab ﻿Hanbali.pdf"
+                class="pdf-link">Excellence of Knowledge by Al Imam Ibn Rajab ﻿Hanbali</a><br>
+            <a href="books of knowledge/Bid'ah by Al Imam Ibn Rajab ﻿Hanbali.pdf" class="pdf-link">Bid'ah by Al Imam Ibn
+                Rajab Hanbali</a><br>
+            <a href="books of knowledge/Strangers by Al Imam Ibn Rajab ﻿Hanbali.pdf" class="pdf-link">Alleviating
+                Grievances
+                in describing the condition of the Strangers by Al
+                Imam Ibn Rajab Hanbali</a><br>
+            <a href="books of knowledge/I Was Sent with The Sword by Al Imam Ibn Rajab ﻿Hanbali.pdf" class="pdf-link">I
+                Was Sent with The Sword by Al Imam Ibn Rajab Hanbali</a><br>
+            <a href="books of knowledge/The Humility in Prayer by Al Imam Ibn Rajab ﻿Hanbali.pdf" class="pdf-link">The
+                Humility in Prayer by Al Imam Ibn Rajab Hanbali</a><br>
+            <a href="books of knowledge/Sincere Repentance by Al Imam Ibn Rajab ﻿Hanbali, Ibn al Qayyim Jawziyyah.pdf"
+                class="pdf-link">Sincere Repentance by Al Imam Ibn Rajab Hanbali, Ibn al Qayyim Jawziyyah</a><br>
+            <a href="books of knowledge/The Heavenly Dispute by Ibn Rajab al Hanbali.pdf" class="pdf-link">The Heavenly
+                Dispute by Ibn Rajab al Hanbali</a><br>
+            <a href="books of knowledge/Heaven's Door by Al Imam Ibn Rajab ﻿Hanbali, Ibn al Qayyim Jawziyyah.pdf"
+                class="pdf-link">Heaven's Door by Al Imam Ibn Rajab Hanbali, Ibn al Qayyim Jawziyyah</a><br>
+            <a href="books of knowledge/The Purification of the Soul by Al Imam Ibn Rajab, Ibn al Qayyim Jawziyyah.pdf"
+                class="pdf-link">The Purification of the Soul by Al Imam Ibn Rajab, Ibn al Qayyim Jawziyyah and Abu
+                Hamid
+                al Ghazali</a><br>
+            <a href="books of knowledge/The Journey of the Strangers by Ibn Rajab al Hanbali.pdf" class="pdf-link">The
+                Journey of the Strangers by Ibn Rajab al Hanbali</a><br>
+            <a href="books of knowledge/An Explanation of the Hadeeth _ “Say, ‘I believe in Allah’, and then be upright and steadfast.” by Al Imam Ibn Rajab rahimahullaah.pdf"
+                class="pdf-link">An Explanation of the Hadeeth “Say, ‘I believe in Allah’, and then be upright and
+                steadfast.” by Al Imam Ibn Rajab rahimahullaah</a><br>
+            <a href="books of knowledge/On Remembering Death - Ibn Rajab Al Hanbali.pdf" class="pdf-link">On Remembering
+                Death - Ibn Rajab Al Hanbali</a><br>
+            <a href="books of knowledge/Condemnation of the Hardness of the Heart by Al Imam Ibn Rajab  rahimahullaah.pdf"
+                class="pdf-link">Condemnation of the Hardness of the Heart by Al Imam Ibn Rajab rahimahullaah</a><br>
+            <a href="books of knowledge/40 Hadith Nawawi Text [ArabicEnglish].pdf" class="pdf-link">40 Hadith Nawawi
+                Text
+                [ArabicEnglish]</a><br>
+            <a href="books of knowledge/Al Arba'een Al Nawawi(Keys to Knowledge).pdf" class="pdf-link">Al Arba'een Al
+                Nawawi(Keys to Knowledge)</a><br>
+            <a href="books of knowledge/Etiquette With the Quran by Imam an Nawawi.pdf" class="pdf-link">Etiquette With
+                the Quran by Imam an Nawawi</a><br>
+            <a href="books of knowledge/Guarding the Tongue by Imam an Nawawi.pdf" class="pdf-link">Guarding the Tongue
+                by Imam an Nawawi</a><br>
+            <a href="books of knowledge/Iqtidaa ul ‘Ilm al 'Amal by Imām Muhammad Nāsiruddin al Albani.pdf"
+                class="pdf-link">Iqtidaa ul ‘Ilm al 'Amal by Imām Muhammad Nāsiruddin al Albani</a><br>
+            <a href="books of knowledge/The Abridgement Of The Prophet's Prayer Described by Imām Muhammad Nāsiruddin al Albani.pdf"
+                class="pdf-link">The Abridgement Of The Prophet's Prayer Described by Imām Muhammad Nāsiruddin al
+                Albani</a><br>
+            <a href="books of knowledge/Paragons Of The Quran by Ibn al Qayyim Jawziyyah.pdf" class="pdf-link">Paragons
+                Of The Quran by Ibn al Qayyim Jawziyyah</a><br>
+            <a href="books of knowledge/AI Mu‘ awwidhatayn - The Explanation of SurahAl Falaq and Surah An Naas by Ibn al Qayyim Jawziyyah.pdf"
+                class="pdf-link">AI Mu‘ awwidhatayn - The Explanation of SurahAl Falaq and Surah An Naas by Ibn al
+                Qayyim
+                Jawziyyah</a><br>
+            <a href="books of knowledge/Guidance to The Uncertain in Reply to The Jews And The Nazarenes by Ibn al Qayyim Jawziyyah.pdf"
+                class="pdf-link">Guidance to The Uncertain in Reply to The Jews And The Nazarenes by Ibn al Qayyim
+                Jawziyyah</a><br>
+            <a href="books of knowledge/Men and the Universe - Reflections of Ibn al Qayyim Jawziyyah.pdf"
+                class="pdf-link">Men and the Universe - Reflections of Ibn al Qayyim Jawziyyah</a><br>
+            <a href="books of knowledge/Heartfelt Advice To a Friend by Ibn al Qayyim Jawziyyah.pdf"
+                class="pdf-link">Heartfelt Advice To a Friend by Ibn al Qayyim Jawziyyah</a><br>
+            <a href="books of knowledge/Az Zuhd by by Ibn al Qayyim Jawziyyah.pdf" class="pdf-link">Az Zuhd by by Ibn al
+                Qayyim Jawziyyah</a><br>
+            <a href="books of knowledge/Ranks of the Divine Seekers vol 1 by Ibn al Qayyim Jawziyyah.pdf"
+                class="pdf-link">Ranks of the Divine Seekers vol 1 by Ibn al Qayyim Jawziyyah</a><br>
+            <a href="books of knowledge/Ranks of the Divine Seekers vol 2 by Ibn al Qayyim Jawziyyah.pdf"
+                class="pdf-link">Ranks of the Divine Seekers vol 2 by Ibn al Qayyim Jawziyyah</a><br>
+            <a href="books of knowledge/Happiness, Misery, and Signs of Their People by Ibn al Qayyim Jawziyyah.pdf"
+                class="pdf-link">Happiness, Misery, and Signs of Their People by Ibn al Qayyim Jawziyyah</a><br>
+            <a href="books of knowledge/Selections from Fath al-Bari by Abūl Faḍl ‘Aḥmad bin `Alī bin Muḥammad bin ‘Aḥmad bin Ḥajar al `Asqalani.pdf"
+                class="pdf-link">Selections from Fath al-Bari by Abūl Faḍl ‘Aḥmad bin `Alī bin Muḥammad bin ‘Aḥmad bin
+                Ḥajar al `Asqalani</a><br>
+            <a href="books of knowledge/Preparing for the Day of Judgement by Abūl Faḍl ‘Aḥmad bin `Alī bin Muḥammad bin ‘Aḥmad bin Ḥajar al `Asqalani.pdf"
+                class="pdf-link">Preparing for the Day of Judgement by Abūl Faḍl ‘Aḥmad bin `Alī bin Muḥammad bin ‘Aḥmad
+                bin Ḥajar al `Asqalani</a><br>
+            <a href="books of knowledge/Nukhbat al Fikar fī Muṣṭalaḥ ‘Ahl al ‘Athar by Abūl Faḍl ‘Aḥmad bin `Alī bin Muḥammad bin ‘Aḥmad bin Ḥajar al `Asqalani.pdf"
+                class="pdf-link">Nukhbat al Fikar fī Muṣṭalaḥ ‘Ahl al ‘Athar by Abūl Faḍl ‘Aḥmad bin `Alī bin Muḥammad
+                bin ‘Aḥmad bin Ḥajar al `Asqalani</a><br>
+            <a href="books of knowledge/The Illustrious Women of Islam by Ibn Hajar al Asqalani.pdf"
+                class="pdf-link">The
+                Illustrious Women of Islam by Ibn Hajar al Asqalani</a><br>
+            <a href="books of knowledge/Kitab at Tawheed by Imām Muḥammad Ibn ‘Abdul Wahhab At Tamīmī.pdf"
+                class="pdf-link">Kitab at Tawheed by Imām Muḥammad Ibn ‘Abdul Wahhab At Tamīmī</a><br>
+            <a href="books of knowledge/Sharh Us Sunnah of Al Barbahaaree English translation by Dawud Burbank.pdf"
+                class="pdf-link">Sharh Us Sunnah of Al Barbahaaree English translation by Dawud Burbank</a><br>
+            <a href="books of knowledge/The Biography Of ImamAbu Dawood.pdf" class="pdf-link">The Biography Of ImamAbu
+                Dawood</a><br>
+            <a href="books of knowledge/Fiqhul Ibaadaat(Understanding Worship) by Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">Fiqhul Ibaadaat(Understanding Worship) by Sh. Muhammad bin Salih Al 'Uthaymeen</a><br>
+            <a href="books of knowledge/The Important Lessons For The Muslim Ummah by Imam Ibn Baaz.pdf"
+                class="pdf-link">The Important Lessons For The Muslim Ummah by Shaikh Abdul 'Aziz ibn Abdullah ibn
+                Baaz</a><br>
+            <a href="books of knowledge/Aspects Of Days Of Ignorance by Imām Muḥammad Ibn ‘Abdul Wahhab At Tamīmī.pdf"
+                class="pdf-link">Aspects Of Days Of Ignorance by Imām Muḥammad Ibn ‘Abdul Wahhab At Tamīmī</a><br>
+            <a href="books of knowledge/Knowledge Seeker's Guide on the Disbelief of the Rejector of Tawhīd by Imām Muḥammad Ibn ‘Abdul Wahhab At Tamīmī.pdf"
+                class="pdf-link">Knowledge Seeker's Guide on the Disbelief of the Rejector of Tawhīd by Imām Muḥammad
+                Ibn
+                ‘Abdul Wahhab At Tamīmī</a><br>
+            <a href="books of knowledge/The Uthmaani State and stand point of by Imām Muḥammad Ibn ‘Abdul Wahhab At Tamīmī.pdf"
+                class="pdf-link">The Uthmaani State and stand point of by Imām Muḥammad Ibn ‘Abdul Wahhab At
+                Tamīmī</a><br>
+            <a href="books of knowledge/Life Of by Imām Muḥammad Ibn ‘Abdul Wahhab At Tamīmī.pdf" class="pdf-link">Life
+                Of by Imām Muḥammad Ibn ‘Abdul Wahhab At Tamīmī</a><br>
+            <a href="books of knowledge/The Prophet and His Ten Companions by Imām Muḥammad Ibn ‘Abdul Wahhab At Tamīmī.pdf"
+                class="pdf-link">The Prophet and His Ten Companions by Imām Muḥammad Ibn ‘Abdul Wahhab At Tamīmī</a><br>
+            <a href="books of knowledge/Abridged Biography of Prophet Muhammad ﷺ by Imām Muḥammad Ibn ‘Abdul Wahhab At Tamīmī.pdf"
+                class="pdf-link">Abridged Biography of the Prophet Muhammad ﷺ (Mukhatasar Seerah ar-Rasool) by Muhammad
+                ibn Abdul Wahhab at-Tamimi
+            </a><br>
+            <a href="books of knowledge/Tafsir Surah Al-Fatiha by Imām Muḥammad Ibn ‘Abdul Wahhab At Tamīmī.pdf"
+                class="pdf-link">Tafsir Surah Al-Fatiha by Imām Muḥammad Ibn ‘Abdul Wahhab At Tamīmī</a><br>
+            <a href="books of knowledge/The Virtues of the Qur ān - Muhammad ibn  Abdul Wahhab.pdf" class="pdf-link">The
+                Virtues of the Qur ān - Muhammad ibn Abdul Wahhab</a><br>
+            <a href="books of knowledge/A Letter on the Censure of Taqleed by Imām Muḥammad Ibn ‘Abdul Wahhab At Tamīmī.pdf"
+                class="pdf-link">A Letter on the Censure of Taqleed by Imām Muḥammad Ibn ‘Abdul Wahhab At Tamīmī</a><br>
+            <a href="books of knowledge/The Foremost Obligatory Duties Every Muslim Must Have Knowledge by Imām Muḥammad Ibn ‘Abdul Wahhab At Tamīmī.pdf"
+                class="pdf-link">The Foremost Obligatory Duties Every Muslim Must Have Knowledge by Imām Muḥammad Ibn
+                ‘Abdul Wahhab At Tamīmī</a><br>
+            <a href="books of knowledge/Mufīd Al-Mustafīd fī Kufr Tārik At Tawhīd by Imām Muḥammad Ibn ‘Abdul Wahhab At Tamīmī.pdf"
+                class="pdf-link">Mufīd Al-Mustafīd fī Kufr Tārik At Tawhīd by Imām Muḥammad Ibn ‘Abdul Wahhab At
+                Tamīmī</a><br>
+            <a href="books of knowledge/A Guide To Hajj Umrah And Visiting The Prophet's Masjid by Imam Ibn Baaz.pdf"
+                class="pdf-link">A Guide To Hajj Umrah And Visiting The Prophet's Masjid by Shaikh Abdul 'Aziz ibn
+                Abdullah ibn Baaz</a><br>
+            <a href="books of knowledge/Hisn Al Muslim(Fortress Of The Muslim).pdf" class="pdf-link">Hisn Al
+                Muslim(Fortress Of The Muslim)</a><br>
+            <a href="books of knowledge/Muslim Masterminds Volume 01.pdf" class="pdf-link">Muslim Masterminds Volume
+                01</a><br>
+            <a href="books of knowledge/Muslim Masterminds Volume 02.pdf" class="pdf-link">Muslim Masterminds Volume
+                02</a><br>
+            <a href="books of knowledge/Muslim Masterminds Volume 03.pdf" class="pdf-link">Muslim Masterminds Volume
+                03</a><br>
+            <a href="books of knowledge/Pearls & Corals 1(Al-Lu'lu' Wal-Marjân).pdf" class="pdf-link">Pearls & Corals
+                1(Al-Lu'lu' Wal-Marjân)</a><br>
+            <a href="books of knowledge/Pearls & Corals 2(Al-Lu'lu' Wal-Marjân).pdf" class="pdf-link">Pearls & Corals
+                2(Al-Lu'lu' Wal-Marjân)</a><br>
+            <a href="books of knowledge/Explanation Of The Four Rules Regarding Shirk by Imām Muḥammad Ibn ‘Abdul Wahhab At Tamīmī.pdf"
+                class="pdf-link">Explanation Of The Four Rules Regarding Shirk by Imām Muḥammad Ibn ‘Abdul Wahhab At
+                Tamīmī</a><br>
+            <a href="books of knowledge/The Marriage Guide - According To The Sunnah Of The Prophet ﷺ by Imām Muhammad Nāsiruddin al Albani.pdf"
+                class="pdf-link">The Marriage Guide - According To The Sunnah Of The Prophet ﷺ by Imām Muhammad
+                Nāsiruddin al Albani</a><br>
+            <a href="books of knowledge/An Namimah - A Sunnah of The Disbelievers of Old.pdf" class="pdf-link">An
+                Namimah
+                - A Sunnah of The Disbelievers of Old</a><br>
+            <a href="books of knowledge/The Ideal Muslimah by Muhammad al-Hashimi.pdf" class="pdf-link">The Ideal
+                Muslimah by Muhammad al-Hashimi</a><br>
+            <a href="books of knowledge/Fatwas of Muslim Women by Ibn Taymiyyah.pdf" class="pdf-link">Fatwas of Muslim
+                Women by Ibn Taymiyyah</a><br>
+            <a href="books of knowledge/Differences of Opinion Amongst the Scholars Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">Differences of Opinion Amongst the Scholars Sh. Muhammad bin Salih Al
+                'Uthaymeen</a><br>
+            <a href="books of knowledge/Thankful Rich and Patient Poor Shaykh al Islam Ibn Taymiyyah.pdf"
+                class="pdf-link">Thankful Rich and Patient Poor Shaykh al Islam Ibn Taymiyyah</a><br>
+            <a href="books of knowledge/The Rules of Sacrificial Offerings & Slaughtering Sh. Al Uthaymeen.pdf"
+                class="pdf-link">The Rules of Sacrificial Offerings & Slaughtering - Sh. Al Uthaymeen</a><br>
+            <a href="books of knowledge/The Foundations Of The Knowledge Of Usool.pdf" class="pdf-link">The Foundations
+                Of The Knowledge Of Usool - Sh. Al Uthaymeen</a><br>
+
+
+
+            <a href="books of knowledge/A Commentary on Zad al Mustaqni Vol 1 by Shaykh Salih al Fawzan.pdf"
+                class="pdf-link">A Commentary on Zad al Mustaqni Vol 1 by Shaykh Salih al Fawzan
+
+            </a><br>
+            <a href="books of knowledge/A Commentary on Zad al Mustaqni Vol 2 by Shaykh Salih al Fawzan.pdf"
+                class="pdf-link">A Commentary on Zad al Mustaqni Vol 2 by Shaykh Salih al Fawzan
+
+            </a><br>
+            <a href="books of knowledge/A Summary Of Islamic Jurisprudence by Shaykh Salih al Fawzan Volume 1.pdf"
+                class="pdf-link">A Summary Of Islamic Jurisprudence by Shaykh Salih al Fawzan Volume 1
+
+            </a><br>
+            <a href="books of knowledge/A Summary Of Islamic Jurisprudence by Shaykh Salih al Fawzan Volume 2.pdf"
+                class="pdf-link">A Summary Of Islamic Jurisprudence by Shaykh Salih al Fawzan Volume 2
+
+            </a><br>
+            <a href="books of knowledge/A Woman's GuideTo Raising A Family by Shaykh Salih al Fawzan.pdf"
+                class="pdf-link">A Woman's GuideTo Raising A Family by Shaykh Salih al Fawzan
+
+            </a><br>
+            <a href="books of knowledge/Aqidat ut Tawhid Shaykh Salih al Fawzan.pdf" class="pdf-link">Aqidat ut Tawhid
+                Shaykh Salih al Fawzan
+
+            </a><br>
+            <a href="books of knowledge/Ahmad Ibn Hanbal's Treatise on Prayer.pdf" class="pdf-link">Ahmad Ibn Hanbal's
+                Treatise on Prayer by Sameh Strauch
+
+            </a><br>
+            <a href="books of knowledge/Ahadith about Fasting, Rulings and Manners - Abridged by Shaykh Salih al Fawzan.pdf"
+                class="pdf-link">Ahadith about Fasting, Rulings and Manners - Abridged by Shaykh Salih al Fawzan
+
+            </a><br>
+            <a href="books of knowledge/Ahadith about Dhul Hijjah and al Muharram by Shaykh Salih al Fawzan.pdf"
+                class="pdf-link">Ahadith about Dhul Hijjah and al Muharram by Shaykh Salih al Fawzan
+
+            </a><br>
+            <a href="books of knowledge/Explanation of Six Events from the Prophetic Sirah by Shaykh Salih al Fawzan.pdf"
+                class="pdf-link">Explanation of Six Events from the Prophetic Sirah by Shaykh Salih al Fawzan
+
+            </a><br>
+            <a href="books of knowledge/Debating the Concepts of the Jamaa’at at-Takfeer by Imaam Muqbil bin Haadee Al-Waadi’ee.pdf"
+                class="pdf-link">Debating the Concepts of the Jamaa’at at-Takfeer by Imaam Muqbil bin Haadee Al-Waadi’ee
+
+            </a><br>
+            <a href="books of knowledge/Coronavirus Pandemic - Leaving a  Space between_People_Praying in Congregation by Shaykh Sulaymān Ar Ruhayli.pdf"
+                class="pdf-link">Coronavirus Pandemic - Leaving a Space between_People_Praying in Congregation by Shaykh
+                Sulaymān Ar Ruhayli
+
+            </a><br>
+            <a href="books of knowledge/Coronavirus Al Iʿtikāf by Shaykh Sulaymān Ar Ruhayli.pdf"
+                class="pdf-link">Coronavirus Al Iʿtikāf by Shaykh Sulaymān Ar Ruhayli
+
+            </a><br>
+            <a href="books of knowledge/Coronavirus - Zakat Al Fitr by Shaykh Sulaymān Ar Ruhayli.pdf"
+                class="pdf-link">Coronavirus - Zakat Al Fitr by Shaykh Sulaymān Ar Ruhayli
+
+            </a><br>
+            <a href="books of knowledge/Coronavirus - ʿEid Prayer at Home by Shaykh Sulaymān Ar Ruhayli.pdf"
+                class="pdf-link">Coronavirus - ʿEid Prayer at Home by Shaykh Sulaymān Ar Ruhayli
+
+            </a><br>
+            <a href="books of knowledge/Concise Notes on The Aqeedah of Imaam At Tahaawee.pdf" class="pdf-link">Concise
+                Notes on The Aqeedah of Imaam At Tahaawee
+
+            </a><br>
+            <a href="books of knowledge/Concise Commentary on The Book of Tawhid by Shaykh Salih al Fawzan.pdf"
+                class="pdf-link">Concise Commentary on The Book of Tawhid by Shaykh Salih al Fawzan
+
+            </a><br>
+            <a href="books of knowledge/Biography of Shaykh Sulaymān Ar Ruhayli.pdf" class="pdf-link">Biography of
+                Shaykh Sulaymān Ar Ruhayli
+
+            </a><br>
+            <a href="books of knowledge/Musnad Imam Ahmad bin Hanbal Vol 1.pdf" class="pdf-link">Musnad Imam Ahmad bin
+                Hanbal Vol 1
+
+            </a><br>
+            <a href="books of knowledge/Musnad Imam Ahmad bin Hanbal Vol 2.pdf" class="pdf-link">Musnad Imam Ahmad bin
+                Hanbal Vol 2
+
+            </a><br>
+            <a href="books of knowledge/Musnad Imam Ahmad bin Hanbal Vol 3.pdf" class="pdf-link">Musnad Imam Ahmad bin
+                Hanbal Vol 3
+
+            </a><br>
+            <a href="books of knowledge/Last Day of Ramaḍān & Day of ʿEid by Shaykh Sulaymān Ar Ruhayli.pdf"
+                class="pdf-link">Last Day of Ramaḍān & Day of ʿEid by Shaykh Sulaymān Ar Ruhayli
+
+            </a><br>
+            <a href="books of knowledge/Kashf Ash Shubuhat.pdf" class="pdf-link">Kashf Ash Shubuhat
+                [This is an explanation of Kashf Ash Shubuhat by Shaykh Muhammad Ibn Abdul Wahhab. The explanations are
+                in Q&A form, and are by Shaykh Uthaymeen and Shaykh Fawzaan. <br>
+
+                (F) = Shaykh Fawzaan
+                (U) = Shaykh Uthaymeen]
+
+            </a><br>
+            <a href="books of knowledge/In Defence of the Four Imams - Ibn Taymiyyah.pdf" class="pdf-link">In Defence of
+                the Four Imams - Ibn Taymiyyah
+
+            </a><br>
+            <a href="books of knowledge/Fiqh Rulings Regarding Those Who Have Passed Away Due To The Coronavirus (COVID-19)  by Shaykh Sulaymān Ar Ruhayli.pdf"
+                class="pdf-link">Fiqh Rulings Regarding Those Who Have Passed Away Due To The Coronavirus (COVID-19) by
+                Shaykh Sulaymān Ar Ruhayli
+
+            </a><br>
+            <a href="books of knowledge/Fiqh Rulings Pertaining To Performing The Tarāwīh Prayercin our Homes by Sulaymān Ar Ruhayli.pdf"
+                class="pdf-link">Fiqh Rulings Pertaining To Performing The Tarāwīh Prayercin our Homes by Sulaymān Ar
+                Ruhayli
+
+            </a><br>
+            <a href="books of knowledge/Returning to the Mosque by Shaykh Sulaymān Ar Ruhayli.pdf"
+                class="pdf-link">Returning to the Mosque by Shaykh Sulaymān Ar Ruhayli
+
+            </a><br>
+            <a href="books of knowledge/Refuting the Doubts Surrounding the Da’wah ofImam MuhammadIbn Abdul Wahhab by Shaykh Salih al Fawzan.pdf"
+                class="pdf-link">Refuting the Doubts Surrounding the Da’wah ofImam MuhammadIbn Abdul Wahhab by Shaykh
+                Salih al Fawzan
+
+            </a><br>
+            <a href="books of knowledge/Ramadan Karim by Shaykh Sulaymān Ar Ruhayli.pdf" class="pdf-link">Ramadan Karim
+                by Shaykh Sulaymān Ar Ruhayli
+
+            </a><br>
+            <a href="books of knowledge/The Fatwa regarding The Gawth, Qutb, Abdal and Awtad by Ibn Taymiyyah.pdf"
+                class="pdf-link">The Fatwa regarding The Gawth, Qutb, Abdal and Awtad by Ibn Taymiyyah
+
+            </a><br>
+            <a href="books of knowledge/The Biography of Imam Ahmad bin Hanbal by Salahuddin Ali Abdul Mawjood.pdf"
+                class="pdf-link">The Biography of Imam Ahmad bin Hanbal by Salahuddin Ali Abdul Mawjood
+
+            </a><br>
+            <a href="books of knowledge/The Beacon of Basra(Etiquette,Wisdom and Asceticism of__Hasan al Basri) by Ibn al Jawzi.pdf"
+                class="pdf-link">The Beacon of Basra(Etiquette,Wisdom and Asceticism of__Hasan al Basri) by Ibn al Jawzi
+
+            </a><br>
+            <a href="books of knowledge/Sufficiency in Creed by Imaam Muwaffaq-ud-Deen __Ibn Qudaamah Al-Maqdisee.pdf"
+                class="pdf-link">Sufficiency in Creed by Imaam Muwaffaq-ud-Deen Ibn Qudaamah Al-Maqdisee
+
+            </a><br>
+            <a href="books of knowledge/Spread Tawḥīd & Sunnah and Do Not Become Weary and Bored by Shaykh Sulaymān Ar Ruhayli.pdf"
+                class="pdf-link">Spread Tawḥīd & Sunnah and Do Not Become Weary and Bored by Shaykh Sulaymān Ar Ruhayli
+
+            </a><br>
+            <a href="books of knowledge/Sincere Advice & Guidance To The Muslim Women And The Rullings Of The Evils Of The Wedding Celebrations by Ahmed Ibn Yahya An Najmi.pdf"
+                class="pdf-link">Sincere Advice & Guidance To The Muslim Women And The Rullings Of The Evils Of The
+                Wedding Celebrations by Ahmed Ibn Yahya An Najmi
+
+            </a><br>
+            <a href="books of knowledge/Selected Hadīth Of The Prophet Concerning Matters Of Belief And Methodology by Al-ʿAllāmah Rabee b. Hādī al-Madkhalī.pdf"
+                class="pdf-link">Selected Hadīth Of The Prophet Concerning Matters Of Belief And Methodology by
+                Al-ʿAllāmah Rabee b. Hādī al-Madkhalī
+
+            </a><br>
+            <a href="books of knowledge/Salām (Peace) until the appearance of Dawn by Shaykh Sulaymān Ar Ruhayli.pdf"
+                class="pdf-link">Salām (Peace) until the appearance of Dawn by Shaykh Sulaymān Ar Ruhayli
+
+            </a><br>
+            <a href="books of knowledge/Rise in Coronavirus Cases by Shaykh Sulaymān Ar Ruhayli.pdf"
+                class="pdf-link">Rise in Coronavirus Cases by Shaykh Sulaymān Ar Ruhayli
+
+            </a><br>
+            <a href="books of knowledge/Reviving the Spirit of the Youth by Shaykh Salih al Fawzan.pdf"
+                class="pdf-link">Reviving the Spirit of the Youth by Shaykh Salih al Fawzan
+
+            </a><br>
+            <a href="books of knowledge/The Wise Sayings of Hasan al Basri.pdf" class="pdf-link">The Wise Sayings of
+                Hasan al Basri by Dr Iftakhar Ahmed
+
+            </a><br>
+            <a href="books of knowledge/The Virtues and Excellence of The Last Ten Nights of Ramadhaan by Al-ʿAllāmah Rabee b. Hādī al-Madkhalī.pdf"
+                class="pdf-link">The Virtues and Excellence of The Last Ten Nights of Ramadhaan by Al-ʿAllāmah Rabee b.
+                Hādī al-Madkhalī
+
+            </a><br>
+            <a href="books of knowledge/The Sunnah of Saying the Takbīr at the End of Ramaḍān by Shaykh Sulaymān Ar Ruhayli.pdf"
+                class="pdf-link">The Sunnah of Saying the Takbīr at the End of Ramaḍān by Shaykh Sulaymān Ar Ruhayli
+
+            </a><br>
+            <a href="books of knowledge/The Status Of Jesus In Islam by Al-ʿAllāmah Rabee b. Hādī al-Madkhalī.pdf"
+                class="pdf-link">The Status Of Jesus In Islam by Al-ʿAllāmah Rabee b. Hādī al-Madkhalī
+
+            </a><br>
+            <a href="books of knowledge/The Ruling of the Dome Built upon the Grave of the Messenger of Allaah – Abu AbdurRahmaan __Muqbil bin Hadi al-Waadi'ee.pdf"
+                class="pdf-link">The Ruling of the Dome Built upon the Grave of the Messenger of Allaah – Abu
+                AbdurRahmaan __Muqbil bin Hadi al-Waadi'ee
+
+            </a><br>
+            <a href="books of knowledge/The Reality of Sufism in Light of Qur'an & Sunnah by Al-ʿAllāmah Rabee b. Hādī al-Madkhalī.pdf"
+                class="pdf-link">The Reality of Sufism in Light of Qur'an & Sunnah by Al-ʿAllāmah Rabee b. Hādī
+                al-Madkhalī
+
+            </a><br>
+            <a href="books of knowledge/The Methodology of the Prophets in Calling to Allah by Al-ʿAllāmah Rabee b. Hādī al-Madkhalī.pdf"
+                class="pdf-link">The Methodology of the Prophets in Calling to Allah by Al-ʿAllāmah Rabee b. Hādī
+                al-Madkhalī
+
+            </a><br>
+            <a href="books of knowledge/The Madinan Way - Ibn Taymiyyah.pdf" class="pdf-link">The Madinan Way - Ibn
+                Taymiyyah
+
+            </a><br>
+            <a href="books of knowledge/The Life of Ibn Hanbal by Ibn al Jawzi.pdf" class="pdf-link">The Life of Ibn
+                Hanbal by Ibn al Jawzi
+
+            </a><br>
+            <a href="books of knowledge/The Key To Success by Ahmad Ibn Hanbal.pdf" class="pdf-link">The Key To Success
+                by Ahmad Ibn Hanbal
+
+            </a><br>
+            <a href="books of knowledge/Why is it called Laylatul Qadr by Shaykh Sulaymān Ar Ruhayli.pdf"
+                class="pdf-link">Why is it called Laylatul Qadr by Shaykh Sulaymān Ar Ruhayli
+
+            </a><br>
+            <a href="books of knowledge/Welcomingthe Monthof Ramadan by Sheikh Ahmed An-Najmi.pdf"
+                class="pdf-link">Welcoming the Month of Ramadan by Sheikh Ahmed An-Najmi
+
+            </a><br>
+            <a href="books of knowledge/Virtues of the Imam Ahmad ibn Hanbal Volume One Ibn al Jawzi.pdf"
+                class="pdf-link">Virtues of the Imam Ahmad ibn Hanbal Volume One Ibn al Jawzi
+
+            </a><br>
+            <a href="books of knowledge/Virtues of Spreading Knowledge via Modern Means of Communication Shaykh Sulaymān Ar Ruhayli.pdf"
+                class="pdf-link">Virtues of Spreading Knowledge via Modern Means of Communication Shaykh Sulaymān Ar
+                Ruhayli
+
+            </a><br>
+            <a href="books of knowledge/Fiqh of Worship - Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">Fiqh of Worship - Sh. Muhammad bin Salih Al 'Uthaymeen
+
+            </a><br>
+            <a href="books of knowledge/Fatwas Of Imām Muhammad Nāsiruddin al Albani.pdf" class="pdf-link">Fatwas Of
+                Imām Muhammad Nāsiruddin al Albani
+
+            </a><br>
+            <a href="books of knowledge/Fadhl al-Islam(The Virtue of Al-Islam) by Sheikh Muhammad bin 'Abdul Wahhab.pdf"
+                class="pdf-link">Fadhl al-Islam(The Virtue of Al-Islam) by Sheikh Muhammad bin 'Abdul Wahhab
+
+            </a><br>
+            <a href="books of knowledge/Explaining the Meaning of An-Nur (The Light)–One of Allaah’s Names by Dr. Saleh As-Saleh.pdf"
+                class="pdf-link">Explaining the Meaning of An-Nur (The Light)–One of Allaah’s Names by Dr. Saleh
+                As-Saleh
+
+            </a><br>
+            <a href="books of knowledge/Ibn Taymiyyah Expounds On Islam.pdf" class="pdf-link">Ibn Taymiyyah Expounds On
+                Islam
+
+            </a><br>
+            <a href="books of knowledge/Hajj And Tawheed.pdf" class="pdf-link">Hajj And Tawheed
+
+            </a><br>
+            <a href="books of knowledge/Full Description of Hajj for Sheikh Sulayman Ar-Ruhayli.pdf"
+                class="pdf-link">Full Description of Hajj for Sheikh Sulayman Ar-Ruhayli
+
+            </a><br>
+            <a href="books of knowledge/From The Completeness Of A Man Is Love For His Wives by Ibn al Qayyim Jawziyyah.pdf"
+                class="pdf-link">From The Completeness Of A Man Is Love For His Wives by Ibn al Qayyim Jawziyyah
+
+            </a><br>
+            <a href="books of knowledge/Foundation Of The Sunnah by Imam Ahmed Ibn Hanbal.pdf"
+                class="pdf-link">Foundation Of The Sunnah by Imam Ahmed Ibn Hanbal
+
+            </a><br>
+            <a href="books of knowledge/Forty Hadeeth Qudsi.pdf" class="pdf-link">Forty Hadeeth Qudsi
+
+            </a><br>
+            <a
+                href="books of knowledge/Fiqhul 'Ibaadaat (Understanding Worship) by Sh. Muhammad bin Salih Al 'Uthaymeen.pdf">Fiqhul
+                'Ibaadaat (Understanding Worship) by Sh. Muhammad bin Salih Al 'Uthaymeen
+
+            </a><br>
+            <a href="books of knowledge/Fiqh Us Sunnah by Sayyid Saabiq.pdf" class="pdf-link">Fiqh Us Sunnah by Sayyid
+                Saabiq
+
+            </a><br>
+            <a href="books of knowledge/Knowledge and its Excellence by Imam Ibn Baaz.pdf" class="pdf-link">Knowledge
+                and its Excellence by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz
+
+            </a><br>
+            <a href="books of knowledge/Knowing Allah by Dr. Saleh As-Saleh.pdf" class="pdf-link">Knowing Allah by Dr.
+                Saleh As-Saleh
+
+            </a><br>
+            <a href="books of knowledge/Khutbat-ul-Haajah The Sermon for Necessities which Allah’s Messenger ﷺ would teach his Companion.pdf"
+                class="pdf-link">Khutbat-ul-Haajah The Sermon for Necessities which Allah’s Messenger ﷺ would teach his
+                Companion
+
+            </a><br>
+            <a href="books of knowledge/Islamic Creed Based on Qur'an and Sunnah by Muhammad bin Jamil Zino.pdf"
+                class="pdf-link">Islamic Creed Based on Qur'an and Sunnah by Muhammad bin Jamil Zino
+
+            </a><br>
+            <a href="books of knowledge/Imam Nawawi’s forty hadeeth.pdf" class="pdf-link">Imam Nawawi’s forty hadeeth
+
+            </a><br>
+            <a href="books of knowledge/Imām Muhammad Nāsiruddin al Albani Versus al-Bootee Taken from ‘Bid`ah Ta`ssub al-Madh-Habiyyah’.pdf"
+                class="pdf-link">Imām Muhammad Nāsiruddin al Albani Versus al-Bootee Taken from ‘Bid`ah Ta`ssub
+                al-Madh-Habiyyah’
+
+            </a><br>
+            <a href="books of knowledge/Ibn Taymiyyah’s Essay on Servitude.pdf" class="pdf-link">Ibn Taymiyyah’s Essay
+                on Servitude
+
+            </a><br>
+            <a href="books of knowledge/Majmoo’al-Fatwa by Imam Ibn Baaz Volume 1.pdf" class="pdf-link">Majmoo’al-Fatwa
+                by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz Volume 1
+
+            </a><br>
+            <a href="books of knowledge/Majmoo’al-Fatwa by Imam Ibn Baaz Volume 2.pdf" class="pdf-link">Majmoo’al-Fatwa
+                by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz Volume 2
+
+            </a><br>
+            <a href="books of knowledge/Majmoo’al-Fatwa by Imam Ibn Baaz Volume 3.pdf" class="pdf-link">Majmoo’al-Fatwa
+                by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz Volume 3
+
+            </a><br>
+            <a href="books of knowledge/Majmoo’al-Fatwa by Imam Ibn Baaz Volume 4.pdf" class="pdf-link">Majmoo’al-Fatwa
+                by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz Volume 4
+
+            </a><br>
+            <a href="books of knowledge/Majmoo’al-Fatwa by Imam Ibn Baaz Volume 5.pdf" class="pdf-link">Majmoo’al-Fatwa
+                by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz Volume 5
+
+            </a><br>
+            <a href="books of knowledge/Majmoo’al-Fatwa by Imam Ibn Baaz Volume 6.pdf" class="pdf-link">Majmoo’al-Fatwa
+                by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz Volume 6
+
+            </a><br>
+            <a href="books of knowledge/Majmoo’al-Fatwa by Imam Ibn Baaz Volume 7.pdf" class="pdf-link">Majmoo’al-Fatwa
+                by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz Volume 7
+
+            </a><br>
+            <a href="books of knowledge/Majmoo’al-Fatwa by Imam Ibn Baaz Volume 8.pdf" class="pdf-link">Majmoo’al-Fatwa
+                by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz Volume 8
+
+            </a><br>
+            <a href="books of knowledge/Majmoo’al-Fatwa by Imam Ibn Baaz Volume 9.pdf" class="pdf-link">Majmoo’al-Fatwa
+                by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz Volume 9
+
+            </a><br>
+            <a href="books of knowledge/Majmoo’al-Fatwa by Imam Ibn Baaz Volume 10.pdf" class="pdf-link">Majmoo’al-Fatwa
+                by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz Volume 10
+
+            </a><br>
+            <a href="books of knowledge/Majmoo’al-Fatwa by Imam Ibn Baaz Volume 11.pdf" class="pdf-link">Majmoo’al-Fatwa
+                by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz Volume 11
+
+            </a><br>
+            <a href="books of knowledge/Majmoo’al-Fatwa by Imam Ibn Baaz Volume 12.pdf" class="pdf-link">Majmoo’al-Fatwa
+                by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz Volume 12
+
+            </a><br>
+            <a href="books of knowledge/Majmoo’al-Fatwa by Imam Ibn Baaz Volume 13.pdf" class="pdf-link">Majmoo’al-Fatwa
+                by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz Volume 13
+
+            </a><br>
+            <a href="books of knowledge/Majmoo’al-Fatwa by Imam Ibn Baaz Volume 14.pdf" class="pdf-link">Majmoo’al-Fatwa
+                by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz Volume 14
+
+            </a><br>
+            <a href="books of knowledge/Majmoo’al-Fatwa by Imam Ibn Baaz Volume 15.pdf" class="pdf-link">Majmoo’al-Fatwa
+                by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz Volume 15
+
+            </a><br>
+            <a href="books of knowledge/Majmoo’al-Fatwa by Imam Ibn Baaz Volume 16.pdf" class="pdf-link">Majmoo’al-Fatwa
+                by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz Volume 16
+
+            </a><br>
+            <a href="books of knowledge/Majmoo’al-Fatwa by Imam Ibn Baaz Volume 17.pdf" class="pdf-link">Majmoo’al-Fatwa
+                by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz Volume 17
+
+            </a><br>
+            <a href="books of knowledge/Majmoo’al-Fatwa by Imam Ibn Baaz Volume 18.pdf" class="pdf-link">Majmoo’al-Fatwa
+                by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz Volume 18
+
+            </a><br>
+            <a href="books of knowledge/Majmoo’al-Fatwa by Imam Ibn Baaz Volume 19.pdf" class="pdf-link">Majmoo’al-Fatwa
+                by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz Volume 19
+
+            </a><br>
+            <a href="books of knowledge/Majmoo’al-Fatwa by Imam Ibn Baaz Volume 20.pdf" class="pdf-link">Majmoo’al-Fatwa
+                by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz Volume 20
+
+            </a><br>
+            <a href="books of knowledge/Majmoo’al-Fatwa by Imam Ibn Baaz Volume 21.pdf" class="pdf-link">Majmoo’al-Fatwa
+                by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz Volume 21
+
+            </a><br>
+            <a href="books of knowledge/Majmoo’al-Fatwa by Imam Ibn Baaz Volume 22.pdf" class="pdf-link">Majmoo’al-Fatwa
+                by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz Volume 22
+
+            </a><br>
+            <a href="books of knowledge/Majmoo’al-Fatwa by Imam Ibn Baaz Volume 23.pdf" class="pdf-link">Majmoo’al-Fatwa
+                by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz Volume 23
+
+            </a><br>
+            <a href="books of knowledge/Majmoo’al-Fatwa by Imam Ibn Baaz Volume 24.pdf" class="pdf-link">Majmoo’al-Fatwa
+                by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz Volume 24
+
+            </a><br>
+            <a href="books of knowledge/Majmoo’al-Fatwa by Imam Ibn Baaz Volume 25.pdf" class="pdf-link">Majmoo’al-Fatwa
+                by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz Volume 25
+
+            </a><br>
+            <a href="books of knowledge/Majmoo’al-Fatwa by Imam Ibn Baaz Volume 26.pdf" class="pdf-link">Majmoo’al-Fatwa
+                by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz Volume 26
+
+            </a><br>
+            <a href="books of knowledge/Majmoo’al-Fatwa by Imam Ibn Baaz Volume 27.pdf" class="pdf-link">Majmoo’al-Fatwa
+                by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz Volume 27
+
+            </a><br>
+            <a href="books of knowledge/Majmoo’al-Fatwa by Imam Ibn Baaz Volume 28.pdf" class="pdf-link">Majmoo’al-Fatwa
+                by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz Volume 28
+
+            </a><br>
+            <a href="books of knowledge/Majmoo’al-Fatwa by Imam Ibn Baaz Volume 29.pdf" class="pdf-link">Majmoo’al-Fatwa
+                by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz Volume 29
+
+            </a><br>
+            <a href="books of knowledge/Majmoo’al-Fatwa by Imam Ibn Baaz Volume 30.pdf" class="pdf-link">Majmoo’al-Fatwa
+                by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz Volume 30
+
+            </a><br>
+            <a href="books of knowledge/Maalik's Muwatta.pdf" class="pdf-link">Maalik's Muwatta
+
+            </a><br>
+            <a href="books of knowledge/Lessons on Fasting,Taraweeh and Zakat by Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">Lessons on Fasting,Taraweeh and Zakat by Sh. Muhammad bin Salih Al 'Uthaymeen
+
+            </a><br>
+            <a href="books of knowledge/Knowledge by Imam Ibn Baaz.pdf" class="pdf-link">Knowledge by Shaikh Abdul 'Aziz
+                ibn Abdullah ibn Baaz
+
+            </a><br>
+            <a href="books of knowledge/Provisions for the Caller to Allah by Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">Provisions for the Caller to Allah by Sh. Muhammad bin Salih Al 'Uthaymeen
+
+            </a><br>
+            <a href="books of knowledge/Obstacles To Khushoo’, Virtues of Prayer at Home and in the Mosque_From the book, “as-Salaat wa Atharuhaa Fee Ziyaadatul Imaan…”.pdf"
+                class="pdf-link">Obstacles To Khushoo’, Virtues of Prayer at Home and in the Mosque_From the book,
+                “as-Salaat wa Atharuhaa Fee Ziyaadatul Imaan…
+
+            </a><br>
+            <a href="books of knowledge/Obstacles that Prevent One from Making Repentance (Taken from the book at-Tawbah) by Shaykh al Islam Ibn Taymiyyah.pdf"
+                class="pdf-link">Obstacles that Prevent One from Making Repentance (Taken from the book at-Tawbah) by
+                Shaykh al Islam Ibn Taymiyyah
+
+            </a><br>
+            <a href="books of knowledge/Natural Blood Of Women by Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">Natural Blood Of Women by Sh. Muhammad bin Salih Al 'Uthaymeen
+
+            </a><br>
+            <a href="books of knowledge/Mustalah al-Hadeeth by Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">Mustalah al-Hadeeth by Sh. Muhammad bin Salih Al 'Uthaymeen
+
+            </a><br>
+            <a href="books of knowledge/Mukhtasar as Seerah An-Nabawiyah -Ibn Sayyid an nas- Dawrah Of Sheikh Muhammad Hisham at Tahiri.pdf"
+                class="pdf-link">Mukhtasar as Seerah An-Nabawiyah -Ibn Sayyid an nas- Dawrah Of Sheikh Muhammad Hisham
+                at Tahiri
+
+            </a><br>
+            <a href="books of knowledge/MAJOR SINS by Muhammad Bin Uthman﻿ ad-Dhahabi.pdf" class="pdf-link">MAJOR SINS
+                by Muhammad Bin Uthman ad-Dhahabi
+
+            </a><br>
+            <a href="books of knowledge/Remeberance Of Allah by Shaykh 'Abdur-Razzaq Ibn 'Abdul-Muhsin al-'Abbād al-Badr.pdf"
+                class="pdf-link">Remeberance Of Allah by Shaykh 'Abdur-Razzaq Ibn 'Abdul-Muhsin al-'Abbād al-Badr
+
+            </a><br>
+            <a href="books of knowledge/Readings in Kashf ush Shubuhaat (Removal of the Doubts) by Sh. Muhammad bin Salih Al 'Uthaymeen [1-11].pdf"
+                class="pdf-link">Readings in Kashf ush Shubuhaat (Removal of the Doubts) by Sh. Muhammad bin Salih Al
+                'Uthaymeen [1-11]
+
+            </a><br>
+            <a href="books of knowledge/Readings in al-Qawaa’id al-Arba’ah (The Four Principles)–by Imām Muḥammad Ibn ‘Abdul Wahhab At Tamīmī by Shaykh Salih al Fawzan.pdf"
+                class="pdf-link">Readings in al-Qawaa’id al-Arba’ah (The Four Principles)–by Imām Muḥammad Ibn ‘Abdul
+                Wahhab At Tamīmī by Shaykh Salih al Fawzan
+
+            </a><br>
+            <a href="books of knowledge/Rasool Saw Kee Namaaz – Imam Ibn Baaz (Urdu).pdf" class="pdf-link">Rasool Saw
+                Kee Namaaz – Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz (Urdu)
+
+            </a><br>
+            <a href="books of knowledge/Rijik (রিযিক) by Abdullah bin Abdur Rajjak Yusuf.pdf" class="pdf-link">Rijik
+                (রিযিক) by Abdullah bin Abdur Rajjak Yusuf
+
+            </a><br>
+            <a href="books of knowledge/Rights Of Spouses by Shaykh Sulaymān Ar Ruhayli.pdf" class="pdf-link">Rights Of
+                Spouses by Shaykh Sulaymān Ar Ruhayli
+
+            </a><br>
+            <a href="books of knowledge/Reverence for the Salah [Shaykh Abdur-Razzaq al-Badr].pdf"
+                class="pdf-link">Reverence for the Salah [Shaykh Abdur-Razzaq al-Badr]
+
+            </a><br>
+            <a href="books of knowledge/Silsilah al-Ahadith as-Sahihah - Volume 1 by Imām Muhammad Nāsiruddin al Albani.pdf"
+                class="pdf-link">Silsilah al-Ahadith as-Sahihah - Volume 1 by Imām Muhammad Nāsiruddin al Albani
+
+            </a><br>
+            <a href="books of knowledge/Shar'h Usul al Eman(Explaining the Fundamentals of Faith) by Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">Shar'h Usul al Eman(Explaining the Fundamentals of Faith) by Sh. Muhammad bin Salih Al
+                'Uthaymeen
+
+            </a><br>
+            <a href="books of knowledge/Selected Ahadeeth from Saheeh al Jaami al Imam as Suyooti.pdf"
+                class="pdf-link">Selected Ahadeeth from Saheeh al Jaami al Imam as Suyooti
+
+            </a><br>
+            <a href="books of knowledge/RIYAD US SALIHEEN The Paradise Of The Pious by Imam Abu Zakariya Yahya Bin Sharaf An-Nawawi.pdf"
+                class="pdf-link">RIYAD US SALIHEEN The Paradise Of The Pious by Imam Abu Zakariya Yahya Bin Sharaf
+                An-Nawawi
+
+            </a><br>
+            <a href="books of knowledge/Rites of Hajj and Umrah From the Book and Sunnah and Narrations from the Pious Predecessors by Imām Muhammad Nāsiruddin al Albani.pdf"
+                class="pdf-link">Rites of Hajj and Umrah From the Book and Sunnah and Narrations from the Pious
+                Predecessors by Imām Muhammad Nāsiruddin al Albani
+
+            </a><br>
+            <a href="books of knowledge/Studies on The Fundamentals of Religion - Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">Studies on The Fundamentals of Religion - Sh. Muhammad bin Salih Al 'Uthaymeen
+
+            </a><br>
+            <a href="books of knowledge/Stories Of The Qur'an by Imam Ibn Kathir.pdf" class="pdf-link">Stories Of The
+                Qur'an by Imam Ibn Kathir
+
+            </a><br>
+            <a href="books of knowledge/Stories Of The Prophets by Ibn Kathir.pdf" class="pdf-link">Stories Of The
+                Prophets by Ibn Kathir
+
+            </a><br>
+            <a href="books of knowledge/Some Sincere Advice To Every Christian by Dr. Saleh As-Saleh.pdf"
+                class="pdf-link">Some Sincere Advice To Every Christian by Dr. Saleh As-Saleh
+
+            </a><br>
+            <a href="books of knowledge/Six Mighty, Beneficial, Lofty Foundations [Of the__Deen] by Imām Muḥammad Ibn ‘Abdul Wahhab At Tamīmī.pdf"
+                class="pdf-link">Six Mighty, Beneficial, Lofty Foundations [Of the Deen] by Imām Muḥammad Ibn ‘Abdul
+                Wahhab At Tamīmī
+
+            </a><br>
+            <a href="books of knowledge/The Basic Rulings and Principles of Fiqh – The Beneficial, Eloquent Classifications and Differentiations by Imam ‘Abdu’l-Rahman Ibn Nasir﻿ al-Sa'di.pdf"
+                class="pdf-link">The Basic Rulings and Principles of Fiqh – The Beneficial, Eloquent Classifications and
+                Differentiations by Imam ‘Abdu’l-Rahman Ibn Nasir al-Sa'di
+
+            </a><br>
+            <a href="books of knowledge/Testing, Afflictions, and Calamities by Dr. Saleh As-Saleh.pdf"
+                class="pdf-link">Testing, Afflictions, and Calamities by Dr. Saleh As-Saleh
+
+            </a><br>
+            <a href="books of knowledge/Tenets of Faith by Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">Tenets of Faith by Sh. Muhammad bin Salih Al 'Uthaymeen
+
+            </a><br>
+
+            <a href="books of knowledge/Tawheedul-Asmaa'was Sifaat by Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">Tawheedul-Asmaa'was Sifaat by Sh. Muhammad bin Salih Al 'Uthaymeen
+
+            </a><br>
+            <a href="books of knowledge/Taraweeh 8 or 20 by The Way of Salafiyyah.pdf" class="pdf-link">Taraweeh 8 or 20
+                by The Way of Salafiyyah
+
+            </a><br>
+            <a href="books of knowledge/Take Your Beliefs From the Qur’an and Sunnah by Muhammad bin Jamil Zino.pdf"
+                class="pdf-link">Take Your Beliefs From the Qur’an and Sunnah by Muhammad bin Jamil Zino
+
+            </a><br>
+            <a href="books of knowledge/The Call For The Unity Of Religions –A False and Dangerous Call– by Dr. Saleh As-Saleh.pdf"
+                class="pdf-link">The Call For The Unity Of Religions –A False and Dangerous Call– by Dr. Saleh As-Saleh
+
+            </a><br>
+            <a href="books of knowledge/The Book of Major Sins - Muhammad ibn Sulayman at-Tamimi.pdf"
+                class="pdf-link">The Book of Major Sins - Muhammad ibn Sulayman at-Tamimi
+
+            </a><br>
+            <a href="books of knowledge/The Belief in Allah The Belief in Allah… What Does it Mean by Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">The Belief in Allah The Belief in Allah… What Does it Mean by Sh. Muhammad bin Salih Al
+                'Uthaymeen
+
+            </a><br>
+            <a href="books of knowledge/The Beard Between The Salaf & Khalaf by Muhammad al-Jibaly.pdf"
+                class="pdf-link">The Beard Between The Salaf & Khalaf by Muhammad al-Jibaly
+
+            </a><br>
+            <a href="books of knowledge/The Creed of Asfahani by Shaykh al Islam Ibn Taymiyyah.pdf" class="pdf-link">The
+                Creed of Asfahani by Shaykh al Islam Ibn Taymiyyah
+
+            </a><br>
+            <a href="books of knowledge/The Creed of Ahl-us-Sunnah wal-Jamâ'ah concerning the Sahâbah by Shaykh 'Abdur-Razzaq Ibn 'Abdul-Muhsin al-'Abbād al-Badr.pdf"
+                class="pdf-link">The Creed of Ahl-us-Sunnah wal-Jamâ'ah concerning the Sahâbah by Shaykh 'Abdur-Razzaq
+                Ibn 'Abdul-Muhsin al-'Abbād al-Badr
+
+            </a><br>
+            <a href="books of knowledge/The Correct Belief and What Opposes It and The Nullifiers of Islam by Imam Ibn Baaz.pdf"
+                class="pdf-link">The Correct Belief and What Opposes It and The Nullifiers of Islam by Shaikh Abdul
+                'Aziz ibn Abdullah ibn Baaz
+
+            </a><br>
+            <a href="books of knowledge/The Contemporary Fitan (Afflictions, Trials, Test, Tribulations) by Dr. Saleh As-Saleh.pdf"
+                class="pdf-link">The Contemporary Fitan (Afflictions, Trials, Test, Tribulations) by Dr. Saleh As-Saleh
+
+            </a><br>
+            <a href="books of knowledge/The Conditions, Pillars and Requirements of the Prayer by Imām Muḥammad Ibn ‘Abdul Wahhab At Tamīmī.pdf"
+                class="pdf-link">The Conditions, Pillars and Requirements of the Prayer by Imām Muḥammad Ibn ‘Abdul
+                Wahhab At Tamīmī
+
+            </a><br>
+            <a href="books of knowledge/The Divine Pre-Decree & Ordainment of Allah by Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">The Divine Pre-Decree & Ordainment of Allah by Sh. Muhammad bin Salih Al 'Uthaymeen
+
+            </a><br>
+            <a href="books of knowledge/The Definition Of An ‘Arab’ by Shaykh al Islam Ibn Taymiyyah.pdf"
+                class="pdf-link">The Definition Of An ‘Arab’ by Shaykh al Islam Ibn Taymiyyah
+
+            </a><br>
+            <a href="books of knowledge/The Declaration of Faith by Shaykh Salih al Fawzan.pdf" class="pdf-link">The
+                Declaration of Faith by Shaykh Salih al Fawzan
+
+            </a><br>
+            <a href="books of knowledge/The Decisive Word on the Factors of Victory and Establishment by Dr Muhammad bin Moosaa Aal Nasr.pdf"
+                class="pdf-link">The Decisive Word on the Factors of Victory and Establishment by Dr Muhammad bin Moosaa
+                Aal Nasr
+
+            </a><br>
+            <a href="books of knowledge/The Criterion Between The Allies Of the Merciful & The Allies Of the Devil by Shaykh al Islam Ibn Taymiyyah.pdf"
+                class="pdf-link">The Criterion Between The Allies Of the Merciful & The Allies Of the Devil by Shaykh al
+                Islam Ibn Taymiyyah
+
+            </a><br>
+            <a href="books of knowledge/The Creed of the Imaam of Hadeeth Abū ‘Abd Allāh Muḥammad ibn Ismā‘īl al-Bukhari & of the Great Scholas from whom he narrated.pdf"
+                class="pdf-link">The Creed of the Imaam of Hadeeth Abū ‘Abd Allāh Muḥammad ibn Ismā‘īl al-Bukhari & of
+                the Great Scholas from whom he narrated
+
+            </a><br>
+            <a href="books of knowledge/The Four Principles by Shaykh ul-Islaam Muhammad bin Abdul-Wahhab(Study Guide).pdf"
+                class="pdf-link">The Four Principles by Shaykh ul-Islaam Muhammad bin Abdul-Wahhab(Study Guide)
+
+            </a><br>
+            <a href="books of knowledge/The Fiqh of Hajj –Taken from Silsilah Ahadeeth As-Saheehah & Silsilah Ahadeeth Ad-Daeefah by Imām Muhammad Nāsiruddin al Albani.pdf"
+                class="pdf-link">The Fiqh of Hajj –Taken from Silsilah Ahadeeth As-Saheehah & Silsilah Ahadeeth
+                Ad-Daeefah by Imām Muhammad Nāsiruddin al Albani
+
+            </a><br>
+            <a href="books of knowledge/The Fatwa of Ibnul-’Uthaymeen (d.1420H) Concerning the Algerian Affair.pdf"
+                class="pdf-link">The Fatwa of Ibnul-’Uthaymeen (d.1420H) Concerning the Algerian Affair
+
+            </a><br>
+            <a href="books of knowledge/The Excellent Qualities of the Holy Qur'an by Imām Muḥammad Ibn ‘Abdul Wahhab At Tamīmī.pdf"
+                class="pdf-link">The Excellent Qualities of the Holy Qur'an by Imām Muḥammad Ibn ‘Abdul Wahhab At Tamīmī
+
+            </a><br>
+            <a href="books of knowledge/The Evils of Music –The Devil's Voice & Recitation–by Ibn al Qayyim Jawziyyah.pdf"
+                class="pdf-link">The Evils of Music –The Devil's Voice & Recitation–by Ibn al Qayyim Jawziyyah
+
+            </a><br>
+            <a href="books of knowledge/The Etiquettes Of Marriage And Wedding by Imām Muhammad Nāsiruddin al Albani.pdf"
+                class="pdf-link">The Etiquettes Of Marriage And Wedding by Imām Muhammad Nāsiruddin al Albani
+
+            </a><br>
+            <a href="books of knowledge/The Importance of Tawheed and the Evil Result of Neglecting it by Shaykh Salih al Fawzan.pdf"
+                class="pdf-link">The Importance of Tawheed and the Evil Result of Neglecting it by Shaykh Salih al
+                Fawzan
+
+            </a><br>
+            <a href="books of knowledge/The ill Effects of Sins[Ibn Uthaymeen].pdf" class="pdf-link">The ill Effects of
+                Sins[Ibn Uthaymeen]
+
+            </a><br>
+            <a href="books of knowledge/The Ideal Muslim by Muhammad al-Hashimi.pdf" class="pdf-link">The Ideal Muslim
+                by Muhammad al-Hashimi
+
+            </a><br>
+            <a href="books of knowledge/The Hijab .. Why_ –Dr_ Muhammad Ismail by Dr. Saleh As-Saleh.pdf"
+                class="pdf-link">The Hijab .. Why_ –Dr_ Muhammad Ismail by Dr. Saleh As-Saleh
+
+            </a><br>
+            <a href="books of knowledge/The Guidance of Muhammad (Blessings and Peace Be Upon Him) Concerning Worship, Dealings and Manners from the book Zadul-Ma`ad by Imam Ibn Al-Qayyim.pdf"
+                class="pdf-link">The Guidance of Muhammad (Blessings and Peace Be Upon Him) Concerning Worship, Dealings
+                and Manners from the book Zadul-Ma`ad by Imam Ibn Al-Qayyim
+
+            </a><br>
+            <a href="books of knowledge/The Four Principles__By Shaykh ul-Islaam Muhammad bin Abdul-Wahhaab.pdf"
+                class="pdf-link">The Four Principles__By Shaykh ul-Islaam Muhammad bin Abdul-Wahhaab
+
+            </a><br>
+            <a href="books of knowledge/The Manners and Etiquette of Da`wah by Imam Ibn Baaz.pdf" class="pdf-link">The
+                Manners and Etiquette of Da`wah by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz
+
+            </a><br>
+            <a href="books of knowledge/The Lofty Virtues Of Ibn Taymiyyah.pdf" class="pdf-link">The Lofty Virtues Of
+                Ibn Taymiyyah
+
+            </a><br>
+            <a href="books of knowledge/The Prayer of the Prophet Described with the Islamic Rulling Regarding Congregational Prayer by Imam Ibn Baaz.pdf"
+                class="pdf-link">The Prayer of the Prophet Described with the Islamic Rulling Regarding Congregational
+                Prayer by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz
+
+            </a><br>
+            <a href="books of knowledge/The Other Side Of Sufism.pdf" class="pdf-link">The Other Side Of Sufism
+
+            </a><br>
+            <a href="books of knowledge/The Obligation of Adhering to the Sunnah __and a Caution against Innovation by Imam Ibn Baaz.pdf"
+                class="pdf-link">The Obligation of Adhering to the Sunnah __and a Caution against Innovation by Shaikh
+                Abdul 'Aziz ibn Abdullah ibn Baaz
+
+            </a><br>
+            <a href="books of knowledge/The Night Prayer in Ramadaan by Imām Muhammad Nāsiruddin al Albani.pdf"
+                class="pdf-link">The Night Prayer in Ramadaan by Imām Muhammad Nāsiruddin al Albani
+
+            </a><br>
+            <a href="books of knowledge/The Natural Blood Of Women[Ibn Uthaymeen].pdf" class="pdf-link">The Natural
+                Blood Of Women[Ibn Uthaymeen]
+
+            </a><br>
+            <a href="books of knowledge/The Most Excellent Manner Of Seeking Forgiviness by Shaykh 'Abdur-Razzaq Ibn 'Abdul-Muhsin al-'Abbād al-Badr.pdf"
+                class="pdf-link">The Most Excellent Manner Of Seeking Forgiviness by Shaykh 'Abdur-Razzaq Ibn
+                'Abdul-Muhsin al-'Abbād al-Badr
+
+            </a><br>
+            <a href="books of knowledge/The Message Of The Messengers by Dr. Saleh As-Saleh.pdf" class="pdf-link">The
+                Message Of The Messengers by Dr. Saleh As-Saleh
+
+            </a><br>
+            <a href="books of knowledge/The Prophet s Prayer [Shaykh Ibn Uthaymeen].pdf" class="pdf-link">The Prophet s
+                Prayer [Shaykh Ibn Uthaymeen]
+
+            </a><br>
+
+            <a href="books of knowledge/The Precious Remembrance by Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">The Precious Remembrance by Sh. Muhammad bin Salih Al 'Uthaymeen
+
+            </a><br>
+            <a href="books of knowledge/The Rulling on Magic and Fortunetelling by Imam Ibn Baaz.pdf"
+                class="pdf-link">The Rulling on Magic and Fortunetelling by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz
+
+            </a><br>
+            <a href="books of knowledge/The Rights of Elders in Islam[ Abdur Razzaq al-Badr].pdf" class="pdf-link">The
+                Rights of Elders in Islam[ Abdur Razzaq al-Badr]
+
+            </a><br>
+            <a href="books of knowledge/The refutation of many of the Sufi Ahadeeth by Shaykh al Islam Ibn Taymiyyah.pdf"
+                class="pdf-link">The refutation of many of the Sufi Ahadeeth by Shaykh al Islam Ibn Taymiyyah
+
+            </a><br>
+            <a href="books of knowledge/The Prostration of Forgetfulness by Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">The Prostration of Forgetfulness by Sh. Muhammad bin Salih Al 'Uthaymeen
+
+            </a><br>
+            <a href="books of knowledge/Treatises Zakat and Fasting by Imam Ibn Baaz .pdf" class="pdf-link">Treatises
+                Zakat and Fasting by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz
+
+            </a><br>
+            <a href="books of knowledge/This is Our Call (The Way of the Salaf) by Imām Muhammad Nāsiruddin al Albani.pdf"
+                class="pdf-link">This is Our Call (The Way of the Salaf) by Imām Muhammad Nāsiruddin al Albani
+
+            </a><br>
+            <a href="books of knowledge/The Whisper of the Shaytan and its Cure by Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">The Whisper of the Shaytan and its Cure by Sh. Muhammad bin Salih Al 'Uthaymeen
+
+            </a><br>
+            <a href="books of knowledge/The Taiyyah Of Abu Ishaq Al Ilbeeree.pdf" class="pdf-link">The Taiyyah Of Abu
+                Ishaq Al Ilbeeree
+
+            </a><br>
+            <a href="books of knowledge/The Tafseer of the Statement of Tawheed by Al-ʿAllāmah Rabee b. Hādī al-Madkhalī.pdf"
+                class="pdf-link">The Tafseer of the Statement of Tawheed by Al-ʿAllāmah Rabee b. Hādī al-Madkhalī
+
+            </a><br>
+            <a href="books of knowledge/The Signs Before The Day Of Judgement by Abu Talhah Daawood Burbank.pdf"
+                class="pdf-link">The Signs Before The Day Of Judgement by Abu Talhah Daawood Burbank
+
+            </a><br>
+            <a href="books of knowledge/The Search for the Truth by a Man Known as Salman the Persian - Dr. Saleh As-Saleh.pdf"
+                class="pdf-link">The Search for the Truth by a Man Known as Salman the Persian - Dr. Saleh As-Saleh
+
+            </a><br>
+            <a href="books of knowledge/Why Did The Imams Differ_ by Shaykh al Islam Ibn Taymiyyah.pdf"
+                class="pdf-link">Why Did The Imams Differ_ by Shaykh al Islam Ibn Taymiyyah
+
+            </a><br>
+            <a href="books of knowledge/Weak Ahadith In Fiqh Us Sunnah.pdf" class="pdf-link">Weak Ahadith In Fiqh Us
+                Sunnah
+
+            </a><br>
+            <a href="books of knowledge/Weak Ahadeeth in Adab al-Mufrad by Imām Muhammad Nāsiruddin al Albani.pdf"
+                class="pdf-link">Weak Ahadeeth in Adab al-Mufrad by Imām Muhammad Nāsiruddin al Albani
+
+            </a><br>
+            <a href="books of knowledge/Warning Against the Fitnah of Takfeer by Imām Muhammad Nāsiruddin al Albani.pdf"
+                class="pdf-link">Warning Against the Fitnah of Takfeer by Imām Muhammad Nāsiruddin al Albani
+
+            </a><br>
+            <a href="books of knowledge/Warning Against Riba (Usury) Transactions by Imam Ibn Baaz.pdf"
+                class="pdf-link">Warning Against Riba (Usury) Transactions by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz
+
+            </a><br>
+            <a href="books of knowledge/Two Ways to Know the Creator From the Words of Ibn al-Qayyim.pdf"
+                class="pdf-link">Two Ways to Know the Creator From the Words of Ibn al-Qayyim
+
+            </a><br>
+            <a href="books of knowledge/Zakat by Imam Ibn Baaz.pdf" class="pdf-link">Zakat by Shaikh Abdul 'Aziz ibn
+                Abdullah ibn Baaz
+
+            </a><br>
+            <a href="books of knowledge/70Questions about the Rulings on Funerals - Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">70Questions about the Rulings on Funerals - Sh. Muhammad bin Salih Al 'Uthaymeen
+
+            </a><br>
+            <a href="books of knowledge/8 Steps To Happiness by Imam ‘Abdu’l-Rahman Ibn Nasir al-Sa'di.pdf"
+                class="pdf-link">8 Steps To Happiness by Imam ‘Abdu’l-Rahman Ibn Nasir al-Sa'di
+
+            </a><br>
+            <a href="books of knowledge/A Series of Guidelines taken from Surah Al-Fatihah by Shaykh 'Abdur-Razzaq Ibn 'Abdul-Muhsin al-'Abbād al-Badr.pdf"
+                class="pdf-link">A Series of Guidelines taken from Surah Al-Fatihah by Shaykh 'Abdur-Razzaq Ibn
+                'Abdul-Muhsin al-'Abbād al-Badr
+
+            </a><br>
+            <a href="books of knowledge/A Guide to Hajj, ‘Umrah and Visiting the Prophet’s (ﷺ) Mosque by Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">A Guide to Hajj, ‘Umrah and Visiting the Prophet’s (ﷺ) Mosque by Sh. Muhammad bin Salih
+                Al 'Uthaymeen
+
+            </a><br>
+            <a href="books of knowledge/A Description Of The Wudu' Of The Prophet(ﷺ) translation by Abu Talha Dawud Burbank.pdf"
+                class="pdf-link">A Description Of The Wudu' Of The Prophet(ﷺ) translation by Abu Talha Dawud Burbank
+
+            </a><br>
+            <a href="books of knowledge/A Treatise on Hijab [Sh. Muhammad bin Salih Al 'Uthaymeen].pdf"
+                class="pdf-link">A Treatise on Hijab [Sh. Muhammad bin Salih Al 'Uthaymeen]
+
+            </a><br>
+            <a href="books of knowledge/Al-Jawab as-Sahih by Shaykh al Islam Ibn Taymiyyah Part 1.pdf"
+                class="pdf-link">Al-Jawab as-Sahih by Shaykh al Islam Ibn Taymiyyah Part 1
+
+            </a><br>
+            <a href="books of knowledge/Al-Jawab as-Sahih by Shaykh al Islam Ibn Taymiyyah Part 2.pdf"
+                class="pdf-link">Al-Jawab as-Sahih by Shaykh al Islam Ibn Taymiyyah Part 2
+
+            </a><br>
+            <a href="books of knowledge/Al-Jawab as-Sahih by Shaykh al Islam Ibn Taymiyyah Part 3.pdf"
+                class="pdf-link">Al-Jawab as-Sahih by Shaykh al Islam Ibn Taymiyyah Part 3
+
+            </a><br>
+            <a href="books of knowledge/Al-Jawab Al-Bahir ‘An Zuwar Al-Maqabir (The Outshining Answer about the Visitors of_graves) by Shaykh al Islam Ibn Taymiyyah.pdf"
+                class="pdf-link">Al-Jawab Al-Bahir ‘An Zuwar Al-Maqabir (The Outshining Answer about the Visitors
+                of_graves) by Shaykh al Islam Ibn Taymiyyah
+
+            </a><br>
+            <a href="books of knowledge/Advice to the Strangers (Within Islaam) Abdul-Wahid bin Abdullaah al-Muhaidib, in the book “Wasiyyatu Ghareeb”.pdf"
+                class="pdf-link">Advice to the Strangers (Within Islaam) Abdul-Wahid bin Abdullaah al-Muhaidib, in the
+                book “Wasiyyatu Ghareeb”
+
+            </a><br>
+            <a href="books of knowledge/Adherence to the Prophet’s Sunnah and Its effects - Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">Adherence to the Prophet’s Sunnah and Its effects - Sh. Muhammad bin Salih Al
+                'Uthaymeen
+
+            </a><br>
+            <a href="books of knowledge/A Treatise on the Times of Prayer - Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">A Treatise on the Times of Prayer - Sh. Muhammad bin Salih Al 'Uthaymeen
+
+            </a><br>
+            <a href="books of knowledge/A Treatise on the Prostration of Forgetfulness - Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">A Treatise on the Prostration of Forgetfulness - Sh. Muhammad bin Salih Al 'Uthaymeen
+
+            </a><br>
+            <a href="books of knowledge/An Explanation of The Du’aa of Qunoot (The Supplication of Standing) During the Witr Prayer by Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">An Explanation of The Du’aa of Qunoot (The Supplication of Standing) During the Witr
+                Prayer by Sh. Muhammad bin Salih Al 'Uthaymeen
+
+            </a><br>
+            <a href="books of knowledge/Al-Walaa' wal-Baraa' by Shaykh Salih al Fawzan.pdf" class="pdf-link">Al-Walaa'
+                wal-Baraa' by Shaykh Salih al Fawzan
+
+            </a><br>
+            <a href="books of knowledge/Al-Muwatta of Imam Malik ibn Anas.pdf" class="pdf-link">Al-Muwatta of Imam Malik
+                ibn Anas
+
+            </a><br>
+            <a href="books of knowledge/Allah’s Names and Attributes - Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">Allah’s Names and Attributes - Sh. Muhammad bin Salih Al 'Uthaymeen
+
+            </a><br>
+            <a href="books of knowledge/Ar Raheeq Al Makhtum[The Sealed Nectar] by Saifur Rahman al-Mubarakpuri.pdf"
+                class="pdf-link">Ar Raheeq Al Makhtum[The Sealed Nectar] by Saifur Rahman al-Mubarakpuri
+
+            </a><br>
+            <a href="books of knowledge/Aqeedatul Wasitiyyah by Shaykh al Islam Ibn Taymiyyah [Note Form].pdf"
+                class="pdf-link">Aqeedatul Wasitiyyah by Shaykh al Islam Ibn Taymiyyah [Note Form]
+
+            </a><br>
+
+            <a href="books of knowledge/Aqeedatul Hamawiyyah by Shaykh al Islam Ibn Taymiyyah.pdf"
+                class="pdf-link">Aqeedatul Hamawiyyah by Shaykh al Islam Ibn Taymiyyah
+
+            </a><br>
+            <a href="books of knowledge/Aqeedah –Guide to Sound Creed– by Shaykh Salih al Fawzan.pdf"
+                class="pdf-link">Aqeedah –Guide to Sound Creed– by Shaykh Salih al Fawzan
+
+            </a><br>
+            <a href="books of knowledge/An Incitation Towards Being Specially Attentive And Being Diligent On The Book Of Allah And Learning It by Imam Ibn Baaz.pdf"
+                class="pdf-link">An Incitation Towards Being Specially Attentive And Being Diligent On The Book Of Allah
+                And Learning It by Shaikh Abdul 'Aziz ibn Abdullah ibn Baaz
+
+            </a><br>
+            <a href="books of knowledge/Biography Of Imam Ibn ul Qayyim al Jawziyyah.pdf" class="pdf-link">Biography Of
+                Imam Ibn ul Qayyim al Jawziyyah
+
+            </a><br>
+            <a href="books of knowledge/Belief in the Angels and Its Effect on the Life of the Ummah by Shaykh Salih al Fawzan.pdf"
+                class="pdf-link">Belief in the Angels and Its Effect on the Life of the Ummah by Shaykh Salih al Fawzan
+
+            </a><br>
+            <a href="books of knowledge/BE AWARE OF TAKFIR! –Refuting Takfiri Statements–.pdf" class="pdf-link">BE AWARE
+                OF TAKFIR! –Refuting Takfiri Statements–
+
+            </a><br>
+            <a href="books of knowledge/Barailwiyyah, History and Aqeedah by Shaykh Ihsaan Ilaahi Zaheer.pdf"
+                class="pdf-link">Barailwiyyah, History and Aqeedah by Shaykh Ihsaan Ilaahi Zaheer
+
+            </a><br>
+            <a href="books of knowledge/Clearing The Doubts And Sufficing The Intellects On The Impermissibility Of Music And Its Instruments by Imām Muhammad Nāsiruddin al Albani.pdf"
+                class="pdf-link">Clearing The Doubts And Sufficing The Intellects On The Impermissibility Of Music And
+                Its Instruments by Imām Muhammad Nāsiruddin al Albani
+
+            </a><br>
+            <a href="books of knowledge/Celebrating the Birthday of the Prophet (ﷺ) by Shaykh Salih al Fawzan.pdf"
+                class="pdf-link">Celebrating the Birthday of the Prophet (ﷺ) by Shaykh Salih al Fawzan
+
+            </a><br>
+            <a href="books of knowledge/Causes Behind The Increase and Decrease of Eemaan by Shaykh 'Abdur-Razzaq Ibn 'Abdul-Muhsin al-'Abbād al-Badr.pdf"
+                class="pdf-link">Causes Behind The Increase and Decrease of Eemaan by Shaykh 'Abdur-Razzaq Ibn
+                'Abdul-Muhsin al-'Abbād al-Badr
+
+            </a><br>
+            <a href="books of knowledge/Book of The End – Great Trias and Tribulations.pdf" class="pdf-link">Book of The
+                End – Great Trias and Tribulations
+
+            </a><br>
+            <a href="books of knowledge/Everyday Recitations.pdf" class="pdf-link">Everyday Recitations
+
+            </a><br>
+            <a href="books of knowledge/Enjoining Right & Forbidding Wrong by Shaykh al Islam Ibn Taymiyyah.pdf"
+                class="pdf-link">Enjoining Right & Forbidding Wrong by Shaykh al Islam Ibn Taymiyyah
+
+            </a><br>
+            <a href="books of knowledge/Encouraging Harmony and Wisdom in Dawah and Warning From Discord by Al-ʿAllāmah Rabee b. Hādī al-Madkhalī.pdf"
+                class="pdf-link">Encouraging Harmony and Wisdom in Dawah and Warning From Discord by Al-ʿAllāmah Rabee
+                b. Hādī al-Madkhalī
+
+            </a><br>
+            <a href="books of knowledge/Dilemma Facing the Youth by Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">Dilemma Facing the Youth by Sh. Muhammad bin Salih Al 'Uthaymeen
+
+            </a><br>
+            <a href="books of knowledge/Difference in Opinion Among Scholars Its Causes and Our Standpoint - Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">Difference in Opinion Among Scholars Its Causes and Our Standpoint - Sh. Muhammad bin
+                Salih Al 'Uthaymeen
+
+            </a><br>
+            <a href="books of knowledge/Death and Resurrection by Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">Death and Resurrection by Sh. Muhammad bin Salih Al 'Uthaymeen
+
+            </a><br>
+            <a href="books of knowledge/Explaining The Foundations Of Faith by Sh. Muhammad bin Salih Al 'Uthaymeen.pdf"
+                class="pdf-link">Explaining The Foundations Of Faith by Sh. Muhammad bin Salih Al 'Uthaymeen
+
+            </a><br>
+            <!-- <a href="" class="pdf-link">
+
+                </a><br>
+<a href="" class="pdf-link">
+
+                </a><br>
+<a href="" class="pdf-link">
+
+                </a><br>
+<a href="" class="pdf-link">
+
+                </a><br>
+<a href="" class="pdf-link">
+
+                </a><br>
+<a href="" class="pdf-link">
+
+                </a><br>
+<a href="" class="pdf-link">
+
+                </a><br>
+<a href="" class="pdf-link">
+
+                </a><br>
+<a href="" class="pdf-link">
+
+                </a><br>
+<a href="" class="pdf-link">
+
+                </a><br>
+<a href="" class="pdf-link">
+
+                </a><br>
+<a href="" class="pdf-link">
+
+                </a><br>
+<a href="" class="pdf-link">
+
+                </a><br>
+<a href="" class="pdf-link">
+
+                </a><br>
+<a href="" class="pdf-link">
+
+                </a><br>
+<a href="" class="pdf-link">
+
+                </a><br>
+<a href="" class="pdf-link">
+
+                </a><br>
+<a href="" class="pdf-link">
+
+                </a><br>
+<a href="" class="pdf-link">
+
+                </a><br>
+<a href="" class="pdf-link">
+
+                </a><br>
+<a href="" class="pdf-link">
+
+                </a><br>
+<a href="" class="pdf-link">
+
+                </a><br>
+
+ -->
+
+            <a href="books of knowledge/A Commentary on the Poem of al-Bayquniyyah by  Uthaymeen.pdf" class="pdf-link">A
+                Commentary on the Poem of al-Bayquniyyah by Uthaymeen</a><br>
+            <a href="books of knowledge/Morning_Evening.pdf" class="pdf-link">Morning Evening</a><br>
+            <a href="books of knowledge/Ruqyah-Booklet.pdf" class="pdf-link">Ruqyah-Booklet</a><br>
+        </div>
+    </div>
+    <!-- Pagination Navigation -->
+    <div id="pagination"></div>
+    <button id="scrollToTopButton" onclick="scrollToTop()">↑</button>
+    <div id="pdfModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>PDF Details</h2>
+            <br><br>
+            <p id="pdfName">Name:</p><br>
+            <p id="pdfSize">Size:</p><br>
+            <a id="readLink" class="read-button" href="" class="pdf-link">Read PDF</a>
+            <a id="downloadLink" class="download-button" href="" download>Download PDF</a>
+        </div>
+    </div>
+    <script>  // Hide the preloader on window load
+        var loader = document.getElementById("preloader1");
+        window.addEventListener("load", function () {
+            loader.style.display = "none";
+        });</script>
+
+    <script>
+        // ----------------------------
+        // Global Variables
+        // ----------------------------
+        let itemsPerPage = 30;
+        let currentPage = 1;
+        let masterItems = [];  // Each group is [anchor, <br> (if exists)]
+        let bookItems = [];    // Filtered list (full or search results)
+        let totalPages = 0;
+        let currentIndex = -1; // For suggestion keyboard navigation
+
+        // ----------------------------
+        // Helper Functions to Show/Hide Nodes
+        // ----------------------------
+        function hideNode(node) {
+            node.classList.add('hidden');
+        }
+        function showNode(node) {
+            node.classList.remove('hidden');
+        }
+
+        // ----------------------------
+        // Escape a string for a regular expression
+        // ----------------------------
+        function escapeRegExp(string) {
+            return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+        }
+
+        // ----------------------------
+        // PERFECT HIGHLIGHT Using the Range API and Overlays
+        // ----------------------------
+        // For a given anchor element and query, find exact text positions and place overlay divs.
+        function perfectHighlight(anchor, query) {
+            // Ensure the anchor is a highlight-container (so it is "position: relative")
+            if (!anchor.classList.contains('highlight-container')) {
+                anchor.classList.add('highlight-container');
+            }
+            // Remove any existing overlay elements in the anchor.
+            const oldOverlays = anchor.querySelectorAll('.perfect-highlight-overlay');
+            oldOverlays.forEach(overlay => overlay.remove());
+
+            if (query.trim() === "") return; // nothing to highlight
+
+            // Helper: Recursively retrieve text nodes from an element.
+            function getTextNodes(node) {
+                let nodes = [];
+                if (node.nodeType === Node.TEXT_NODE) {
+                    nodes.push(node);
+                } else {
+                    node.childNodes.forEach(child => {
+                        nodes = nodes.concat(getTextNodes(child));
+                    });
+                }
+                return nodes;
+            }
+            const textNodes = getTextNodes(anchor);
+
+            textNodes.forEach(textNode => {
+                const text = textNode.textContent;
+                const regex = new RegExp(escapeRegExp(query), 'gi');
+                let match;
+                while ((match = regex.exec(text)) !== null) {
+                    // Create a Range for this match.
+                    const range = document.createRange();
+                    range.setStart(textNode, match.index);
+                    range.setEnd(textNode, match.index + match[0].length);
+                    // Get the exact rectangles for the range.
+                    const rects = range.getClientRects();
+                    const anchorRect = anchor.getBoundingClientRect();
+                    Array.from(rects).forEach(rect => {
+                        // Create the overlay div.
+                        const overlay = document.createElement('div');
+                        overlay.classList.add('perfect-highlight-overlay');
+                        // Set position relative to the anchor.
+                        overlay.style.left = (rect.left - anchorRect.left) + "px";
+                        overlay.style.top = (rect.top - anchorRect.top) + "px";
+                        overlay.style.width = rect.width + "px";
+                        overlay.style.height = rect.height + "px";
+                        // Insert the overlay as the first child so it is behind the text.
+                        anchor.insertBefore(overlay, anchor.firstChild);
+                    });
+                }
+            });
+        }
+
+        // Apply perfect highlighting on all anchors.
+        function perfectHighlightAll(query) {
+            masterItems.forEach(group => {
+                perfectHighlight(group[0], query);
+            });
+        }
+
+        // ----------------------------
+        // File Size Retrieval with Fallback (HEAD then GET with Range header)
+        // ----------------------------
+        function getFileSize(fileUrl) {
+            return fetch(fileUrl, { method: 'HEAD' })
+                .then(response => {
+                    const size = response.headers.get('Content-Length');
+                    if (size) { return size; }
+                    else { throw new Error("No Content-Length from HEAD"); }
+                })
+                .catch(error => {
+                    console.error("HEAD request failed, trying GET with Range header:", error);
+                    return fetch(fileUrl, { method: "GET", headers: { "Range": "bytes=0-0" } })
+                        .then(response => {
+                            const contentRange = response.headers.get("Content-Range");
+                            if (contentRange) {
+                                const parts = contentRange.split("/");
+                                if (parts.length === 2) { return parts[1].trim(); }
+                            }
+                            throw new Error("GET request did not provide file size");
+                        });
+                });
+        }
+
+        // ----------------------------
+        // Prefetch File Sizes for Visible PDF Links
+        // ----------------------------
+        function prefetchVisibleFileSizes() {
+            const visibleLinks = document.querySelectorAll("#content .books a:not(.hidden)");
+            visibleLinks.forEach(link => {
+                if (!link.dataset.filesize) {
+                    const fileUrl = link.getAttribute("href");
+                    getFileSize(fileUrl)
+                        .then(size => {
+                            const sizeInBytes = parseInt(size, 10);
+                            let humanSize;
+                            if (sizeInBytes < 1024) humanSize = sizeInBytes + " Bytes";
+                            else if (sizeInBytes < 1048576) humanSize = (sizeInBytes / 1024).toFixed(2) + " KB";
+                            else humanSize = (sizeInBytes / 1048576).toFixed(2) + " MB";
+                            link.dataset.filesize = humanSize;
+                        })
+                        .catch(err => {
+                            console.error("Error prefetching file size:", err);
+                            link.dataset.filesize = "Unknown";
+                        });
+                }
+            });
+        }
+
+        // ----------------------------
+        // Pagination & Grouping Functions
+        // ----------------------------
+        function initializePagination() {
+            const booksDiv = document.querySelector("#content .books");
+            if (!booksDiv) {
+                console.error("Container with class 'books' not found inside #content.");
+                return;
+            }
+            const children = Array.from(booksDiv.childNodes);
+            masterItems = [];
+            // Group each <a> element with its following <br> if available.
+            for (let i = 0; i < children.length; i++) {
+                if (children[i].nodeType === Node.ELEMENT_NODE &&
+                    children[i].tagName.toLowerCase() === "a") {
+                    let group = [children[i]];
+                    if (i + 1 < children.length &&
+                        children[i + 1].nodeType === Node.ELEMENT_NODE &&
+                        children[i + 1].tagName.toLowerCase() === "br") {
+                        group.push(children[i + 1]);
+                        i++;
+                    }
+                    // Ensure the anchor has the highlight-container class.
+                    children[i].classList.add("highlight-container");
+                    masterItems.push(group);
+                }
+            }
+            bookItems = masterItems.slice();
+            totalPages = Math.max(1, Math.ceil(bookItems.length / itemsPerPage));
+            currentPage = 1;
+            displayPage(1);
+        }
+
+        function displayPage(page) {
+            if (page < 1 || page > totalPages) return;
+            currentPage = page;
+            const booksDiv = document.querySelector("#content .books");
+            if (!booksDiv) {
+                console.error("Container with class 'books' not found inside #content.");
+                return;
+            }
+            // Hide all groups.
+            masterItems.forEach(group => group.forEach(node => hideNode(node)));
+            // Show only groups for the current page.
+            const start = (page - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            bookItems.slice(start, end).forEach(group => group.forEach(node => showNode(node)));
+            updatePaginationControls();
+            prefetchVisibleFileSizes();
+            // Apply perfect highlighting to visible anchors.
+            const currentQuery = document.getElementById("searchInput").value.toLowerCase().trim();
+            perfectHighlightAll(currentQuery);
+        }
+
+        function updatePaginationControls() {
+            const paginationDiv = document.getElementById("pagination");
+            if (!paginationDiv) {
+                console.error("Element with id 'pagination' not found.");
+                return;
+            }
+            paginationDiv.innerHTML = "";
+            if (currentPage > 1) {
+                const prevBtn = document.createElement("button");
+                prevBtn.textContent = "Prev";
+                prevBtn.addEventListener("click", () => displayPage(currentPage - 1));
+                paginationDiv.appendChild(prevBtn);
+            }
+            const pageInfo = document.createElement("span");
+            pageInfo.textContent = ` Page ${currentPage} of ${totalPages} `;
+            paginationDiv.appendChild(pageInfo);
+            if (currentPage < totalPages) {
+                const nextBtn = document.createElement("button");
+                nextBtn.textContent = "Next";
+                nextBtn.addEventListener("click", () => displayPage(currentPage + 1));
+                paginationDiv.appendChild(nextBtn);
+            }
+        }
+
+        // ----------------------------
+        // Search & Suggestion Functions
+        // ----------------------------
+        function searchBooks() {
+            const query = document.getElementById("searchInput").value.toLowerCase().trim();
+            const searchBox = document.getElementById("searchBox");
+            searchBox.classList.add("glow");
+            setTimeout(() => { searchBox.classList.remove("glow"); }, 1000);
+            let filtered = [];
+            if (query === "") {
+                filtered = masterItems.slice();
+            } else {
+                filtered = masterItems.filter(group =>
+                    group.some(node => node.textContent.toLowerCase().includes(query))
+                );
+            }
+            bookItems = filtered;
+            totalPages = Math.max(1, Math.ceil(bookItems.length / itemsPerPage));
+            currentPage = 1;
+            displayPage(1);
+            perfectHighlightAll(query);
+            document.getElementById("suggestionsBox").style.display = "none";
+        }
+
+        function clearSearch() {
+            document.getElementById("searchInput").value = "";
+            document.getElementById("clearButton").classList.remove("visible");
+            searchBooks();
+        }
+
+        function showSuggestions() {
+            const query = document.getElementById("searchInput").value.toLowerCase().trim();
+            const suggestionsBox = document.getElementById("suggestionsBox");
+            const clearButton = document.getElementById("clearButton");
+            currentIndex = -1;
+            if (query) { clearButton.classList.add("visible"); } else { clearButton.classList.remove("visible"); }
+            suggestionsBox.innerHTML = "";
+            if (query) {
+                const suggestions = masterItems
+                    .map(group => group[0].textContent)
+                    .filter(text => text.toLowerCase().includes(query));
+                suggestions.forEach(suggestion => {
+                    const p = document.createElement("p");
+                    const regex = new RegExp("(" + escapeRegExp(query) + ")", "gi");
+                    p.innerHTML = suggestion.replace(regex, '<mark class="custom-highlight">$1</mark>');
+                    p.onclick = () => {
+                        document.getElementById("searchInput").value = suggestion;
+                        suggestionsBox.style.display = "none";
+                        searchBooks();
+                    };
+                    suggestionsBox.appendChild(p);
+                });
+                suggestionsBox.style.display = "block";
+            } else {
+                suggestionsBox.style.display = "none";
+            }
+        }
+
+        function handleKeyDown(event) {
+            const suggestionsBox = document.getElementById("suggestionsBox");
+            const suggestionElements = suggestionsBox.getElementsByTagName("p");
+            if (suggestionElements.length === 0) return;
+            if (event.key === "ArrowDown") {
+                currentIndex = (currentIndex + 1) % suggestionElements.length;
+                updateSelection(suggestionElements);
+                suggestionElements[currentIndex].scrollIntoView({ behavior: "smooth", block: "nearest" });
+            } else if (event.key === "ArrowUp") {
+                currentIndex = (currentIndex - 1 + suggestionElements.length) % suggestionElements.length;
+                updateSelection(suggestionElements);
+                suggestionElements[currentIndex].scrollIntoView({ behavior: "smooth", block: "nearest" });
+            } else if (event.key === "Enter") {
+                if (currentIndex >= 0) {
+                    document.getElementById("searchInput").value = suggestionElements[currentIndex].textContent;
+                    suggestionsBox.style.display = "none";
+                    searchBooks();
+                }
+            }
+        }
+
+        function updateSelection(suggestions) {
+            for (let i = 0; i < suggestions.length; i++) {
+                suggestions[i].classList.remove("selected");
+            }
+            if (currentIndex >= 0) {
+                suggestions[currentIndex].classList.add("selected");
+            }
+        }
+
+        // ----------------------------
+        // PDF Modal Functionality
+        // ----------------------------
+        function addPdfLinkEventListeners() {
+            const pdfLinks = document.querySelectorAll(".pdf-link");
+            pdfLinks.forEach(link => {
+                link.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    const linkEl = this;
+                    const fileUrl = linkEl.getAttribute("href");
+                    const fileName = fileUrl.split("/").pop();
+                    document.getElementById("pdfName").innerText = `Name: ${fileName}`;
+                    document.getElementById("downloadLink").setAttribute("href", fileUrl);
+                    if (linkEl.dataset.filesize) {
+                        document.getElementById("pdfSize").innerText = `Size: ${linkEl.dataset.filesize}`;
+                    } else {
+                        document.getElementById("pdfSize").innerText = "Size: Calculating...";
+                        getFileSize(fileUrl)
+                            .then(size => {
+                                const sizeInBytes = parseInt(size, 10);
+                                let humanSize;
+                                if (sizeInBytes < 1024) {
+                                    humanSize = sizeInBytes + " Bytes";
+                                } else if (sizeInBytes < 1048576) {
+                                    humanSize = (sizeInBytes / 1024).toFixed(2) + " KB";
+                                } else {
+                                    humanSize = (sizeInBytes / 1048576).toFixed(2) + " MB";
+                                }
+                                document.getElementById("pdfSize").innerText = `Size: ${humanSize}`;
+                                linkEl.dataset.filesize = humanSize;
+                            })
+                            .catch(error => {
+                                console.error("Error fetching file size:", error);
+                                document.getElementById("pdfSize").innerText = "Size: Unknown";
+                            });
+                    }
+                    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+                    if (isMobile) {
+                        document.getElementById("readLink").style.display = "none";
+                    } else {
+                        document.getElementById("readLink").style.display = "inline-block";
+                        document.getElementById("readLink").setAttribute("href", fileUrl);
+                        document.getElementById("readLink").setAttribute("target", "_blank");
+                    }
+                    document.getElementById("pdfModal").style.display = "block";
+                });
+            });
+        }
+
+        document.querySelector(".close").addEventListener("click", function () {
+            document.getElementById("pdfModal").style.display = "none";
+        });
+
+        window.addEventListener("click", function (event) {
+            const modal = document.getElementById("pdfModal");
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+
+        // ----------------------------
+        // Utility Functions
+        // ----------------------------
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        window.addEventListener("scroll", () => {
+            const scrollToTopButton = document.getElementById("scrollToTopButton");
+            if (window.pageYOffset > 100) {
+                scrollToTopButton.style.display = "flex";
+            } else {
+                scrollToTopButton.style.display = "none";
+            }
+        });
+
+        document.getElementById("searchInput").addEventListener("input", function () {
+            this.style.height = "auto";
+            this.style.height = this.scrollHeight + "px";
+            showSuggestions();
+        });
+
+
+        // ----------------------------
+        // Initialization on DOMContentLoaded
+        // ----------------------------
+        document.addEventListener("DOMContentLoaded", () => {
+            initializePagination();
+            document.getElementById("searchInput").addEventListener("input", searchBooks);
+            document.getElementById("searchInput").addEventListener("keydown", handleKeyDown);
+            addPdfLinkEventListeners();
+        });
+    </script>
+
+
+</body>
+
+</html>

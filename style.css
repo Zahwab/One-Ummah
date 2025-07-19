@@ -1,0 +1,485 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.about {
+    font-size: 7vw;
+    color: rgb(221, 245, 213);
+    width: 100vw;
+    font-family: fantasy, monospace;
+}
+
+.abouti {
+    font-size: 2vw;
+    color: rgb(221, 245, 213);
+    width: 100vw;
+    font-family: fantasy, monospace;
+    text-align: end;
+}
+
+.nav ul {
+
+    background-color: #1F2833;
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 2vw;
+}
+
+.nav ul a {
+    text-decoration: none;
+    color: #66FCF1;
+}
+
+.nav :hover {
+    background-color: #0B0C10;
+}
+
+.nav li {
+
+
+    display: inline-block;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.flex5 {
+    font-size: 3vw;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.book {
+    background-color: #272727;
+    color: #E43D12;
+    display: inline-block;
+
+}
+
+.recitations {
+    background-color: #272727;
+    color: #FFE400;
+    display: inline-block;
+}
+
+.d {
+    background-color: rgba(250, 245, 240, 0.8);  /* A lighter, bright tone */
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .l {
+    background-color: rgba(245, 240, 235, 0.8);  /* Slightly different, light tone */
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  /* Hover effect for both classes */
+  .d:hover,
+  .l:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+   
+.flex7 {
+    font-size: 3vw;
+    display: inline-block;
+}
+
+
+.poems {
+    background-color: #272727;
+    color: #0ccdef;
+    display: inline-block;
+}
+
+
+.qtu {
+    font-size: 2vw;
+}
+
+.qtu a {
+    text-decoration: none;
+}
+
+
+
+
+
+
+.flex11 {
+    font-size: 3vw;
+}
+
+.lol {
+    margin: 2%;
+}
+
+.lol a {
+    text-decoration: none;
+}
+
+.qt {
+
+
+    padding: 2em;
+    background: #222629;
+    text-align: center;
+    border-radius: 10px;
+    color: aliceblue;
+    font: 3vw sans-serif;
+    position: relative;
+
+}
+
+.flex10 {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 2%;
+
+}
+
+.flex10 a {
+    width: 35%;
+    text-decoration: none;
+}
+
+
+
+.mega {
+    background-color: #EDEAE5;
+}
+
+.flexs img {
+    width: 58%;
+}
+
+#preloader1 {
+    background: #000000 url(img/opreload.gif) no-repeat center center;
+    background-size: 30%;
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    z-index: 100;
+}
+
+#preloader {
+    background: #000000 url(img/request.gif) no-repeat center center;
+    background-size: 30%;
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    z-index: 100;
+}
+
+
+
+
+.contact-container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    background-image: url(img/c.png);
+    background-size: cover;
+}
+
+.contact-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.contact-left-title h2 {
+    font-weight: 600;
+    color: #A5DDE5;
+
+    font-size: 45px;
+    margin-bottom: 5px;
+}
+
+.contact-left-title hr {
+    border: none;
+    width: 42vw;
+    height: 5px;
+    background: linear-gradient(270deg, #fa02e1, #8c00ff, #04118d);
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.contact-inputs {
+    width: 450px;
+    height: 50px;
+    border: none;
+    outline: none;
+    padding-left: 25px;
+    font-weight: 900;
+    color: #000000;
+    border-radius: 50px;
+
+}
+
+.contact-left textarea {
+    height: 140px;
+    padding-top: 15px;
+    border-radius: 25px;
+    padding-left: 25px;
+}
+
+.contact-inputs:focus {
+    border: 2px solid #66FCF1;
+}
+
+.contact-inputs::placeholder {
+    color: black;
+}
+
+
+.contact-left button {
+    display: flex;
+    align-items: start;
+    background: linear-gradient(270deg, transparent, rgb(30, 216, 229), rgb(227, 212, 250), rgb(182, 53, 237));
+    padding: 13px 25px;
+    font-size: 16px;
+    color: black;
+    gap: 10px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20vh;
+    background-color: #EDEAE5;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 25px;
+    padding: 10px 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    transition: box-shadow 0.5s, border-radius 0.5s;
+    position: relative;
+}
+
+.search-box.level {
+    border-radius: 25px 25px 0 0;
+}
+
+.search-input {
+    border: none;
+    outline: none;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 20px 20px;
+    width: 100%;
+    padding-right: 30px;
+    padding-left: 5px;
+}
+
+.clear-button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 15px;
+    margin-left: -35px;
+    color: #000000;
+    visibility: hidden;
+}
+
+.clear-button.visible {
+    visibility: visible;
+}
+
+
+.search-button {
+    background-color: #1F6521;
+    color: #fff;
+    border: none;
+    outline: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.search-button:hover {
+    background-color: #4CAF50;
+}
+
+.glow {
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+}
+
+#content a.styled-content {
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #EDEAE5;
+    text-decoration: none;
+    color: #000;
+    transition: background-color 0.2s, box-shadow 0.2s;
+    font-size: 1.5vw;
+}
+
+#content a:link {
+    color: #1F6521;
+}
+
+#content a:visited {
+    color: #75A1A1;
+}
+
+#scrollToTopButton {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #75A1A1;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+#scrollToTopButton:hover {
+    background-color: #1F6521;
+}
+
+@media only screen and (max-width:524px) {
+    #preloader {
+        background-size: 60%;
+    }
+
+    .nav ul {
+        display: none;
+    }
+
+    .flex5 {
+        flex-wrap: wrap;
+        font-size: 20px;
+    }
+
+    .flex7 {
+        flex-wrap: wrap;
+        font-size: 20px;
+    }
+
+    .d {
+        font-size: 3vw;
+    }
+
+    .l {
+        font-size: 3vw;
+    }
+
+    .recom {
+        font-size: 3vw;
+    }
+
+
+    .quran {
+        font-size: 6vw;
+    }
+
+    .contact-left-title h2 {
+        font-size: 25px;
+        height: -45px;
+    }
+
+    .contact-left button {
+        font-size: 13px;
+        padding: 9px 15px;
+    }
+
+    .contact-container {
+        background-image: none;
+    }
+
+    .contact-container {
+        background-image: url(img/m.png);
+    }
+
+    .flexs img {
+        width: 100%;
+    }
+
+    .search-box {
+        flex-direction: column;
+        padding: 15px;
+        border-radius: 25px;
+    }
+
+    .search-input {
+        border: none;
+        outline: none;
+        padding: 10px;
+        font-size: 3vw;
+        border-radius: 25px;
+        width: 100%;
+
+    }
+
+    .search-button {
+        margin: 0 0 0 0;
+        width: 100%;
+        padding: 10px;
+        border-radius: 25px;
+    }
+
+    .clear-button {
+        margin-left: 0;
+        margin-top: 0;
+    }
+
+    .contact-inputs {
+        width: 275px;
+        height: 35px;
+        font-weight: 600;
+    }
+
+
+    #scrollToTopButton {
+        background-color: #1F6521;
+    }
+
+    #content a.styled-content {
+        font-size: 3vw;
+    }
+}
+
+#myForm+script {
+    display: none;
+}

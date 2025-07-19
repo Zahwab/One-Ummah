@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Zahidur Rahman">
+    <title>ZR Poems</title>
+    <link rel="shortcut icon" href="poetry.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #ADBBDA;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: #333;
+            line-height: 1.6;
+
+            transition: background-color 3s ease-in-out;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Main Container */
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        section {
+            background: #fff;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 0.5rem;
+        }
+
+        /* Flex Layout for Links */
+        .flex-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        a.box {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 200px;
+            padding: 1.5rem 2rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border-radius: 4px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        a.box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Individual Box Styles */
+        .box1 {
+            background-color: #E64833;
+            color: #FFE400;
+        }
+
+        .box2 {
+            background-color: #14A76C;
+            color: #17252A;
+        }
+
+        .box3 {
+            background-color: #AFD275;
+            color: #123C69;
+        }
+
+        .box4 {
+            background-color: #A4B3B6;
+            color: #1C3334;
+        }
+
+        .box5 {
+            background-color: #46344E;
+            color: #FAED26;
+        }
+
+        .box6 {
+            background-color: #222629;
+            color: #65CCB8;
+        }
+
+        .box7 {
+            background-color: #C5CBE3;
+            color: #F13C20;
+        }
+
+        .box8 {
+            background-color: #0677A1;
+            color: #10E7DC;
+        }
+
+        /* Footer with Glass and Transparent Effect */
+        footer {
+            background: rgba(255, 255, 255, 0.3);
+            /* Semi-transparent background */
+            -webkit-backdrop-filter: blur(10px);
+            /* Safari support */
+            backdrop-filter: blur(10px);
+            /* Glass effect */
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            text-align: center;
+            padding: 1rem;
+            font-size: 1rem;
+            color: #555;
+        }
+
+
+        /* Responsive Adjustments */
+        @media (min-width: 768px) {
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            a.box {
+                font-size: 1.8rem;
+                padding: 1.5rem 2.5rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+
+            .section-title {
+                font-size: 2.2rem;
+            }
+
+            a.box {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div id="preloader"></div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Grouped Poems Section -->
+        <section id="grouped-poems">
+            <h2 class="section-title">A Part Of The Truth</h2>
+            <div class="flex-container">
+                <a href="/poems/The Sun.pdf" target="_blank" class="box box1">The Sun</a>
+                <a href="/poems/The Path .pdf" target="_blank" class="box box2">The Path</a>
+            </div>
+            <div class="flex-container" style="margin-top: 1rem;">
+                <a href="/poems/The Moon.pdf" target="_blank" class="box box3">The Moon</a>
+                <a href="/poems/The Stars.pdf" target="_blank" class="box box4">The Stars</a>
+            </div>
+            <div class="flex-container" style="margin-top: 1rem;">
+                <a href="/poems/The End_.pdf" target="_blank" class="box box5">The End?</a>
+                <a href="/poems/You Have To Choose .pdf" target="_blank" class="box box6">You Have To Choose</a>
+            </div>
+        </section>
+
+        <!-- Single Poems Section -->
+        <section id="single-poems">
+            <h2 class="section-title">Single Poems</h2>
+            <div class="flex-container">
+                <a href="/poems/Doodling.pdf" target="_blank" class="box box7">Doodling</a>
+                <a href="/poems/Tranquility .pdf" target="_blank" class="box box8">Tranquility</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2023-25 Copyright</p>
+    </footer>
+
+    <!-- JavaScript to Hide Preloader -->
+    <script>
+        var loader = document.getElementById("preloader");
+        window.addEventListener("load", function () {
+            loader.style.display = "none";
+        });
+
+        function getRandomLightColor() {
+            const r = Math.floor(200 + Math.random() * 56); // Range: 200-255 for lighter colors
+            const g = Math.floor(200 + Math.random() * 56);
+            const b = Math.floor(200 + Math.random() * 56);
+            return `rgb(${r}, ${g}, ${b})`;
+        }
+
+        function changeBackgroundColor() {
+            document.body.style.backgroundColor = getRandomLightColor();
+        }
+
+        document.body.style.backgroundColor = getRandomLightColor();
+
+        setTimeout(changeBackgroundColor, 100);
+        setInterval(changeBackgroundColor, 5000);
+    </script>
+</body>
+
+</html>
