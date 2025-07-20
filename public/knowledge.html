@@ -8,6 +8,14 @@
     <title>Books Of Knowledge</title>
     <link rel="shortcut icon" href="oneummah.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
+      <!-- your existing scripts… -->
+
+  <!-- ### NEW: thumbnail patch (must load after your main script) -->
+  <script src="../assets/js/thumbnailModal.js"></script>
+  <script src="./assets/js/thumbnailFeature.js"></script>
+  <script src="assets/js/thumbnailFix.js"></script>
+
+
     <style>
         /* Base Styles */
         .hbook {
@@ -178,14 +186,15 @@
             font-size: 16px;
             margin: 0 10px;
         }
-.thumbnail-preview {
+
+       .thumbnail-preview {
   display: block;
-  margin: 0 auto 15px;
-  width: 100%;
-  max-width: 300px;
-  border: 1px solid #ddd;
+  margin: 0 auto 1rem;
+  max-width: 280px;
   border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
+
         .hidden {
             display: none !important;
         }
@@ -2115,29 +2124,30 @@
             <span class="close">&times;</span>
             <h2>PDF Details</h2>
             <br><br>
+            <img id="pdfThumb" src="" alt="PDF Thumbnail" class="thumbnail-preview">
+
             <p id="pdfName">Name:</p><br>
             <p id="pdfSize">Size:</p><br>
             <a id="readLink" class="read-button" href="" class="pdf-link">Read PDF</a>
             <a id="downloadLink" class="download-button" href="" download>Download PDF</a>
         </div>
     </div><!-- Pagination Navigation -->
-<div id="pagination"></div>
-<button id="scrollToTopButton" onclick="scrollToTop()">↑</button>
+    <div id="pagination"></div>
+    <button id="scrollToTopButton" onclick="scrollToTop()">↑</button>
 
-<div id="pdfModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2>PDF Details</h2>
+    <div id="pdfModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>PDF Details</h2>
 
-    <!-- Thumbnail Preview -->
-<img id="pdfThumb" src="" alt="PDF Thumbnail" class="thumbnail-preview">
-
-    <p id="pdfName">Name:</p>
-    <p id="pdfSize">Size:</p>
-    <a id="readLink" class="read-button" href="">Read PDF</a>
-    <a id="downloadLink" class="download-button" href="" download>Download PDF</a>
-  </div>
-</div>
+            <!-- Thumbnail Preview -->
+           <img id="pdfThumb" src="" alt="PDF Thumbnail" class="thumbnail-preview">
+            <p id="pdfName">Name:</p>
+            <p id="pdfSize">Size:</p>
+            <a id="readLink" class="read-button" href="">Read PDF</a>
+            <a id="downloadLink" class="download-button" href="" download>Download PDF</a>
+        </div>
+    </div>
     <script>  // Hide the preloader on window load
         var loader = document.getElementById("preloader1");
         window.addEventListener("load", function () {
