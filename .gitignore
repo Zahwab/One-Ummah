@@ -1,2 +1,18 @@
 # Local Netlify folder
 .netlify
+tafsir
+Qur'an (Yaseer Al Dossary)
+Qur'an (Sheikh Mishary Alafasy)
+books of knowledge
+img
+node_modules
+*.js
+*.log
+google8d0c5f647c1718e7.html
+sitemap.xml
+robots.txt
+poetry.ico
+oneummah.ico
+netlify.toml
+request.html
+success.html
