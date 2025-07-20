@@ -2130,7 +2130,7 @@
     <h2>PDF Details</h2>
 
     <!-- Thumbnail Preview -->
-    <img id="pdfThumb" src="" alt="PDF Thumbnail" class="thumbnail-preview">
+<img id="pdfThumb" src="" alt="PDF Thumbnail" class="thumbnail-preview">
 
     <p id="pdfName">Name:</p>
     <p id="pdfSize">Size:</p>
@@ -2143,41 +2143,6 @@
         window.addEventListener("load", function () {
             loader.style.display = "none";
         });</script>
-<script>
-
-  // Element references for modal details
-  const pdfThumb     = document.getElementById('pdfThumb');
-  const pdfName      = document.getElementById('pdfName');
-  const pdfSize      = document.getElementById('pdfSize');
-  const readLink     = document.getElementById('readLink');
-  const downloadLink = document.getElementById('downloadLink');
-  const modal        = document.getElementById('pdfModal');
-  const closeBtn     = modal.querySelector('.close');
-
-  // Close modal when “×” is clicked
-  closeBtn.onclick = () => modal.style.display = 'none';
-  // Close when clicking outside the content
-  window.onclick = (e) => { if (e.target === modal) modal.style.display = 'none'; };
-
-  /**
-   * Opens the PDF Details modal,
-   * injects thumbnail, name, size & links.
-   */
-  function openModal(book) {
-    pdfThumb.src        = `public/${book.thumb}`;
-    pdfName.textContent = `Name: ${book.name}`;
-    pdfSize.textContent = `Size: ${book.size}`;
-    readLink.href       = book.file;
-    downloadLink.href   = book.file;
-    modal.style.display = 'block';
-  }
-
-  // Example: wiring up thumbnail cards/list items
-  // document.querySelectorAll('.book-item').forEach(el => {
-  //   el.onclick = () => openModal(el.bookData);
-  // });
-
-</script>
     <script>
         // ----------------------------
         // Global Variables
