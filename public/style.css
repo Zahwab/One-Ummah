@@ -76,7 +76,7 @@ html {
     padding: 10px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
-  
+
   .l {
     background-color: rgba(245, 240, 235, 0.8);  /* Slightly different, light tone */
     backdrop-filter: blur(6px);
@@ -86,14 +86,14 @@ html {
     padding: 10px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
-  
+
   /* Hover effect for both classes */
   .d:hover,
   .l:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   }
-   
+
 .flex7 {
     font-size: 3vw;
     display: inline-block;
@@ -168,7 +168,7 @@ html {
 }
 
 #preloader1 {
-    background: #000000 url(img/opreload.gif) no-repeat center center;
+    background: #000000 url(../img/opreload.gif) no-repeat center center;
     background-size: 30%;
     height: 100vh;
     width: 100%;
@@ -177,7 +177,7 @@ html {
 }
 
 #preloader {
-    background: #000000 url(img/request.gif) no-repeat center center;
+    background: #000000 url(../img/request.gif) no-repeat center center;
     background-size: 30%;
     height: 100vh;
     width: 100%;
@@ -193,8 +193,7 @@ html {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    background-image: url(img/c.png);
-    background-size: cover;
+    background-image: url(../img/c.jpg);
 }
 
 .contact-left {
@@ -429,7 +428,7 @@ html {
     }
 
     .contact-container {
-        background-image: url(img/m.png);
+        background-image: url(../img/m.jpg);
     }
 
     .flexs img {
