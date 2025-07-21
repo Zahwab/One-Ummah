@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Zahidur Rahman">
     <title>Books Of Knowledge</title>
-    <link rel="icon" href="oneummah.ico" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="../oneummah.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../style.css">
     <style>
         /* Base Styles */
         .hbook {
@@ -179,52 +179,56 @@
             margin: 0 10px;
         }
 
-  .modal-thumbnail {
-  display: block;
-  margin: 1em auto;
-  width: 100%;
-  max-width: 320px;
-  height: auto;
-  object-fit: contain;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
-}
-.fullscreen-thumbnail-container {
-  display: none;
-  position: fixed;
-  z-index: 9999;
-  top: 0; left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.95);
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-.fullscreen-image {
-  max-width: 95%;
-  max-height: 90%;
-  object-fit: contain;
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(255,255,255,0.3);
-}
-.close-fullscreen {
-  position: absolute;
-  top: 20px;
-  right: 30px;
-  font-size: 36px;
-  color: #fff;
-  cursor: pointer;
-}
+        .modal-thumbnail {
+            display: block;
+            margin: 1em auto;
+            width: 100%;
+            max-width: 320px;
+            height: auto;
+            object-fit: contain;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
 
-/* Slight hover effect on desktop */
-@media (hover: hover) {
-  .modal-thumbnail:hover {
-    transform: scale(1.03);
-  }
-}
+        .fullscreen-thumbnail-container {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .fullscreen-image {
+            max-width: 95%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .close-fullscreen {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 36px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        /* Slight hover effect on desktop */
+        @media (hover: hover) {
+            .modal-thumbnail:hover {
+                transform: scale(1.03);
+            }
+        }
 
 
 
@@ -296,17 +300,18 @@
                 font-size: 14px;
             }
         }
-/* Extra padding around modal content on mobile */
-@media (max-width: 600px) {
-  .modal-content {
-    padding: 1em;
-  }
 
-  .modal-thumbnail {
-    max-width: 100%;
-    border-radius: 6px;
-  }
-}
+        /* Extra padding around modal content on mobile */
+        @media (max-width: 600px) {
+            .modal-content {
+                padding: 1em;
+            }
+
+            .modal-thumbnail {
+                max-width: 100%;
+                border-radius: 6px;
+            }
+        }
 
         @media (max-width: 480px) {
             .hbook {
@@ -2388,7 +2393,7 @@
             <h2>PDF Details</h2>
             <br>
             <img id="pdfThumbnail" class="modal-thumbnail" src="" alt="PDF thumbnail" />
-<br>
+            <br>
             <p id="pdfName">Name:</p><br>
             <p id="pdfSize">Size:</p><br>
             <a id="readLink" class="read-button" href="" class="pdf-link">Read PDF</a>
@@ -2400,9 +2405,9 @@
 
 
     <div id="thumbnailFullscreen" class="fullscreen-thumbnail-container">
-  <img id="fullscreenImage" class="fullscreen-image" src="" alt="Full Thumbnail" />
-  <span class="close-fullscreen">&times;</span>
-</div>
+        <img id="fullscreenImage" class="fullscreen-image" src="" alt="Full Thumbnail" />
+        <span class="close-fullscreen">&times;</span>
+    </div>
 
 
 
@@ -2732,17 +2737,17 @@
                     const fileName = fileUrl.split("/").pop();
 
 
-                   const thumbBase = fileName.replace('.pdf', '');
-const thumbnailEl = document.getElementById("pdfThumbnail");
+                    const thumbBase = fileName.replace('.pdf', '');
+                    const thumbnailEl = document.getElementById("pdfThumbnail");
 
-// Try WEBP first
-thumbnailEl.src = `thumbnails/${thumbBase}.webp`;
-thumbnailEl.alt = `Thumbnail for ${fileName}`;
+                    // Try WEBP first
+                    thumbnailEl.src = `thumbnails/${thumbBase}.webp`;
+                    thumbnailEl.alt = `Thumbnail for ${fileName}`;
 
-// Fallback if not found
-thumbnailEl.onerror = () => {
-  thumbnailEl.src = `thumbnails/${thumbBase}.png`;
-};
+                    // Fallback if not found
+                    thumbnailEl.onerror = () => {
+                        thumbnailEl.src = `thumbnails/${thumbBase}.png`;
+                    };
 
 
                     document.getElementById("pdfName").innerText = `Name: ${fileName}`;
@@ -2828,21 +2833,21 @@ thumbnailEl.onerror = () => {
         });
 
         document.getElementById("pdfThumbnail").addEventListener("click", () => {
-  const src = document.getElementById("pdfThumbnail").src;
-  const fullscreenImage = document.getElementById("fullscreenImage");
-  fullscreenImage.src = src;
-  document.getElementById("thumbnailFullscreen").style.display = "flex";
-});
+            const src = document.getElementById("pdfThumbnail").src;
+            const fullscreenImage = document.getElementById("fullscreenImage");
+            fullscreenImage.src = src;
+            document.getElementById("thumbnailFullscreen").style.display = "flex";
+        });
 
-document.querySelector(".close-fullscreen").addEventListener("click", () => {
-  document.getElementById("thumbnailFullscreen").style.display = "none";
-});
+        document.querySelector(".close-fullscreen").addEventListener("click", () => {
+            document.getElementById("thumbnailFullscreen").style.display = "none";
+        });
 
-document.getElementById("thumbnailFullscreen").addEventListener("click", (e) => {
-  if (e.target.id === "thumbnailFullscreen") {
-    document.getElementById("thumbnailFullscreen").style.display = "none";
-  }
-});
+        document.getElementById("thumbnailFullscreen").addEventListener("click", (e) => {
+            if (e.target.id === "thumbnailFullscreen") {
+                document.getElementById("thumbnailFullscreen").style.display = "none";
+            }
+        });
     </script>
 
 
