@@ -15,8 +15,8 @@
     exclude    = ["**/404.html"]
 
     # Default change frequency and priority for all entries
-    changeFreq = "monthly"
-    priority   = 0.5
+    changeFreq = "daily"
+priority   = 1.0
 
     # How to treat .html files in URLs
     prettyURLs = true

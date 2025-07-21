@@ -2,26 +2,26 @@
 import os, glob, json
 from pdf2image import convert_from_path
 
-# ─── ROOT & PATHS ───────────────────────────────────────────────────
+# ─── ROOT & PATHS ─────────────────────────────────────────────
 ROOT        = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PDF_DIR     = os.path.join(ROOT, "pdfs")
 THUMB_DIR   = os.path.join(ROOT, "public", "thumbnails")
 MANIFEST_FP = os.path.join(ROOT, "public", "books.json")
 os.makedirs(THUMB_DIR, exist_ok=True)
 
-# ─── SCAN FOR PDFS ──────────────────────────────────────────────────
-all_pdfs = sorted(glob.glob(f"{PDF_DIR}/**/*.pdf", recursive=True))
+# ─── SCAN FOR PDFS ────────────────────────────────────────────
+all_pdfs = sorted(glob.glob(os.path.join(PDF_DIR, "**", "*.pdf"), recursive=True))
 print(f"📁 Found {len(all_pdfs)} PDFs")
 
-# ─── BUILD MANIFEST ─────────────────────────────────────────────────
+# ─── BUILD MANIFEST ──────────────────────────────────────────
 manifest = []
 for pdf_path in all_pdfs:
-    name      = os.path.splitext(os.path.basename(pdf_path))[0]
-    rel_pdf   = pdf_path.replace("\\", "/")
-    size_mb   = os.path.getsize(pdf_path) / (1024 * 1024)
-    size_str  = f"{size_mb:.2f} MB"
-    thumb_fp  = os.path.join(THUMB_DIR, f"{name}.webp")
-    thumb_rel = thumb_fp.replace("\\", "/").split("public/")[-1]
+    name       = os.path.splitext(os.path.basename(pdf_path))[0]
+    rel_pdf    = os.path.relpath(pdf_path, ROOT).replace("\\", "/")
+    size_mb    = os.path.getsize(pdf_path) / (1024 * 1024)
+    size_str   = f"{size_mb:.2f} MB"
+    thumb_fp   = os.path.join(THUMB_DIR, f"{name}.webp")
+    thumb_rel  = os.path.relpath(thumb_fp, ROOT).replace("\\", "/")
 
     if not os.path.exists(thumb_fp):
         try:
@@ -38,7 +38,7 @@ for pdf_path in all_pdfs:
         "size":  size_str
     })
 
-# ─── WRITE JSON ──────────────────────────────────────────────────────
+# ─── WRITE JSON ──────────────────────────────────────────────
 with open(MANIFEST_FP, "w", encoding="utf-8") as f:
     json.dump(manifest, f, indent=2)
 
