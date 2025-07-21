@@ -189,11 +189,17 @@ html {
 
 
 .contact-container {
-    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    background-image: url(../img/c.jpg);
+    background-image:url("/img/c.jpg");
+     background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100vh;
+  width: 100%;
+
 }
 
 .contact-left {
@@ -428,7 +434,14 @@ html {
     }
 
     .contact-container {
-        background-image: url(../img/m.jpg);
+        background-image: url("/img/m.jpg");
+         background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100vh;
+  width: 100%;
+
     }
 
     .flexs img {
