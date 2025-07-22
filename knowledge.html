@@ -255,7 +255,87 @@
         }
 
 
+        .container {
+            perspective: 200px;
+            transform: preserve-3d;
+            display: flex;
+            /* Align items using Flexbox */
+            justify-content: center;
+            /* Horizontally center */
+            align-items: center;
+            /* Vertically center (if needed within parent height) */
+            margin-top: 20px;
+            /* Spacing below heading */
+            margin-bottom: 10px;
+            /* Optional: spacing above image */
+            width: 100%;
+            /* Fill the modal's width */
+        }
 
+        .box {
+            --size: 12vmin;
+            width: var(--size);
+            height: var(--size);
+            background-color: hsla(170, 50%, 50%, 0.3);
+            transform: rotateZ(30deg) skew(-35deg);
+            position: relative;
+            animation: animate 800ms infinite ease-in-out both alternate;
+        }
+
+        .box:nth-of-type(1) {
+            animation-delay: 0.1s;
+        }
+
+        .box:nth-of-type(2) {
+            animation-delay: 0.2s;
+        }
+
+        .box:nth-of-type(3) {
+            animation-delay: 0.3s;
+        }
+
+        .box:nth-of-type(4) {
+            animation-delay: 0.4s;
+        }
+
+        .box::after,
+        .box::before {
+            content: "";
+            width: inherit;
+            height: 5px;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+        }
+
+        .box::before {
+            transform-origin: left bottom;
+            background-color: hsla(170, 50%, 50%, 0.7);
+            transform: translateX(var(--size)) rotateZ(180deg) skew(45deg);
+        }
+
+        .box::after {
+            background-color: hsla(170, 50%, 50%, 0.5);
+            transform-origin: right bottom;
+            transform: translateX(0) rotateZ(90deg) skew(-45deg);
+        }
+
+        /* bring them all togehter */
+        .box+.box {
+            top: 0;
+            position: absolute;
+            transform: translateY(0) rotateZ(30deg) skew(-35deg);
+        }
+
+        @keyframes animate {
+            from {
+                transform: translateY(0) rotateZ(30deg) skew(-35deg);
+            }
+
+            to {
+                transform: translateY(calc(-1.2 * var(--size))) rotateZ(30deg) skew(-35deg);
+            }
+        }
 
         /* Responsive styles */
         @media (max-width: 768px) {
@@ -2435,8 +2515,10 @@
             <br>
             <img id="pdfThumbnail" class="modal-thumbnail" src="" alt="PDF thumbnail" />
             <br>
-            <p id="pdfName">Name:</p><br>
-            <p id="pdfSize">Size:</p><br>
+            <!-- <p id="pdfName">Name:</p><br>
+            <p id="pdfSize">Size:</p><br> -->
+            <p id="pdfName"><strong>Name:</strong> <span id="pdfNameValue"></span></p><br>
+            <p id="pdfSize"><strong>Size:</strong> <span id="pdfSizeValue"></span></p><br>
             <a id="readLink" class="read-button" href="" class="pdf-link">Read PDF</a>
             <a id="downloadLink" class="download-button" href="" download>Download PDF</a>
         </div>
@@ -2450,13 +2532,84 @@
         <span class="close-fullscreen">&times;</span>
     </div>
 
-
-
     <script>  // Hide the preloader on window load
         var loader = document.getElementById("preloader1");
         window.addEventListener("load", function () {
             loader.style.display = "none";
         });</script>
+
+    <script>
+        function applyThumbnailLoader(newImageURL) {
+            const thumbnail = document.getElementById("pdfThumbnail");
+            if (!thumbnail) return;
+
+            // Remove any previous loader
+            const existingLoader = thumbnail.parentElement.querySelector(".container");
+            if (existingLoader) existingLoader.remove();
+
+            // Inject loader markup
+            const loaderWrapper = document.createElement("div");
+            loaderWrapper.innerHTML = `
+      <div class="container">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+      </div>
+    `;
+            loaderWrapper.style.textAlign = "center";
+            loaderWrapper.style.marginBottom = "20px";
+            thumbnail.parentElement.insertBefore(loaderWrapper, thumbnail);
+
+            // Show loader, hide image
+            loaderWrapper.style.display = "block";
+            thumbnail.style.display = "none";
+
+            // Set new image source
+            thumbnail.src = newImageURL;
+
+            // Show image when loaded
+            thumbnail.onload = function () {
+                loaderWrapper.style.display = "none";
+                thumbnail.style.display = "block";
+            };
+
+            thumbnail.onerror = function () {
+                loaderWrapper.style.display = "none";
+                thumbnail.alt = "Thumbnail unavailable";
+                thumbnail.style.display = "block";
+            };
+        }
+
+        // Attach to all PDF links dynamically
+        document.addEventListener("DOMContentLoaded", function () {
+            const pdfLinks = document.querySelectorAll(".pdf-link");
+
+            pdfLinks.forEach(link => {
+                link.addEventListener("click", function (event) {
+                    event.preventDefault(); // optional: prevent auto-navigation
+
+                    // Get the new thumbnail from your automation logic
+                    const newThumbnailURL = generateThumbnailFromPDF(this.href); // this function is assumed
+
+                    applyThumbnailLoader(newThumbnailURL);
+
+                    // Update other modal info if needed
+                    document.getElementById("readLink").href = this.href;
+                    document.getElementById("downloadLink").href = this.href;
+                    document.getElementById("pdfName").textContent = "Name: " + this.href.split("/").pop();
+                    document.getElementById("pdfSize").textContent = "Size: Loading...";
+                    document.getElementById("pdfModal").style.display = "block";
+                });
+            });
+        });
+
+        // Optional placeholder logic if you need a converter
+        function generateThumbnailFromPDF(pdfPath) {
+            const fileName = pdfPath.split("/").pop().replace(".pdf", "");
+            return `thumbnails/${fileName}.jpg`; // Adjust as needed to match your actual setup
+        }
+    </script>
 
     <script>
         // ----------------------------
