@@ -8,7 +8,7 @@ img
 node_modules/
 poetry.ico
 oneummah.ico
-request.html
-success.html
+# request.html
+# success.html
 llama-2-7b-chat.gguf
 llama.cpp

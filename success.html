@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Zahidur Rahman">
+  <title>Submission Successful</title>
+  <link rel="shortcut icon" href="oneummah.ico" type="image/x-icon">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      background: linear-gradient(270deg, #ff9a9e, #fad0c4, #fad0c4, #ff9a9e, #a1c4fd, #c2e9fb, #d4fc79, #96e6a1, #ff9a9e, #a1c4fd, #ff6f61, #6b6fdb, #9be2f7, #fbc2eb, #a8edea, #f5f7fa, #ff7eb3, #ff65a3, #7afcff, #6fc3df, #5f3f81);
+      background-size: 3000% 3000%;
+      animation: gradientAnimation 25s ease infinite;
+    }
+
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.4);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      animation: fadeIn 1s ease-in;
+      backdrop-filter: blur(10px);
+      max-width: 90%;
+      margin: 0 10px;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .logo {
+      margin-bottom: 20px;
+    }
+
+    .logo img {
+      width: 13vw;
+      animation: bounceIn 0.5s ease;
+    }
+
+    @keyframes bounceIn {
+      from {
+        transform: scale(0.5);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    h1 {
+      color: #4CAF50;
+      text-shadow: 0 0 10px rgba(76, 175, 80, 0.7);
+    }
+
+    p {
+      font-size: 1.2em;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+    }
+
+    a:hover {
+      background-color: #45a049;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.5em;
+      }
+
+      p {
+        font-size: 1em;
+      }
+
+      .logo img {
+        width: 26vw;
+      }
+
+      a {
+        padding: 8px 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.2em;
+      }
+
+      p {
+        font-size: 0.9em;
+      }
+
+      .logo img {
+        width: 39vw;
+      }
+
+      a {
+        padding: 6px 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="preloader1"></div>
+  <div class="container">
+    <div class="logo">
+      <img src="../img/Check.gif" alt="Success">
+    </div>
+    <h1>Jazakallah Khair!</h1>
+    <br>
+    <p>Your submission has been received successfully.</p>
+    <a href="request.html">Submit another response after 24 Hours of this submission</a>
+  </div>
+  <script>
+    var loader = document.getElementById("preloader1");
+    window.addEventListener("load", function () {
+      loader.style.display = "none";
+    })
+  </script>
+</body>
+
+</html>
